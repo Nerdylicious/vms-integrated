@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'administrator',
     'event',
+    'home',
     'job',
     'organization',
     'shift',
