@@ -1,0 +1,8 @@
+*.pyc
+*.swk
+*.swn
+*.swo
+*.swp
+.vagrant*
+runserver
+runtests
