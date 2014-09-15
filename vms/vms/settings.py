@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'job',
     'organization',
     'shift',
+    'vms',
     'volunteer',
 )
 
