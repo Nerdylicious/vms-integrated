@@ -1,7 +1,7 @@
 {% extends "vms/base.html" %}
 
 {% block content %}
-    <form class="signup form-signup" id="signup_form" method="post" action="#" enctype="multipart/form-data">
+    <form class="signup form-signup" id="signup_form" method="post" action="{% url 'registration:signup_volunteer' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <h2>Sign Up</h2>
         <hr></hr>
@@ -10,7 +10,7 @@
                 Username<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_username" class="textinput textInput form-control" type="text" placeholder="Username" name="username" maxlength="30" autofocus="autofocus"></input>
+                <input id="id_username" class="textinput textInput form-control" type="text" placeholder="Username" name="usr-username" maxlength="30" autofocus="autofocus"></input>
             </div>
         </div>
         <div id="div_id_password" class="form-group">
@@ -18,7 +18,7 @@
                 Password<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_password" class="textinput textInput form-control" type="password" placeholder="Password" name="password"></input>
+                <input id="id_password" class="textinput textInput form-control" type="password" placeholder="Password" name="usr-password"></input>
             </div>
         </div>
         <div id="div_id_description" class="form-group">
@@ -26,7 +26,7 @@
                 About
             </label>
             <div class="controls">
-                <textarea id="id_description" class="textinput textInput form-control" type="text" placeholder="Include a short biography of yourself" name="description" rows="5"></textarea>
+                <textarea id="id_description" class="textinput textInput form-control" type="text" placeholder="Include a short biography of yourself" name="vol-description" rows="5"></textarea>
             </div>
         </div>
         <div id="div_id_first_name" class="form-group">
@@ -34,7 +34,7 @@
                 First Name<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_first_name" class="textinput textInput form-control" type="text" placeholder="First Name" name="first_name"></input>
+                <input id="id_first_name" class="textinput textInput form-control" type="text" placeholder="First Name" name="vol-first_name"></input>
             </div>
         </div>
         <div id="div_id_last_name" class="form-group">
@@ -42,7 +42,7 @@
                 Last Name<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_last_name" class="textinput textInput form-control" type="text" placeholder="Last Name" name="last_name"></input>
+                <input id="id_last_name" class="textinput textInput form-control" type="text" placeholder="Last Name" name="vol-last_name"></input>
             </div>
         </div>
         <div id="div_id_email" class="form-group">
@@ -50,7 +50,7 @@
                 Email<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_email" class="textinput textInput form-control" type="text" placeholder="Email" name="email"></input>
+                <input id="id_email" class="textinput textInput form-control" type="text" placeholder="Email" name="vol-email"></input>
             </div>
         </div>
         <div id="div_id_address" class="form-group">
@@ -58,7 +58,7 @@
                 Address<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_address" class="textinput textInput form-control" type="text" placeholder="Address" name="address"></input>
+                <input id="id_address" class="textinput textInput form-control" type="text" placeholder="Address" name="vol-address"></input>
             </div>
         </div>
         <div id="div_id_city" class="form-group">
@@ -66,7 +66,7 @@
                 City<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_city" class="textinput textInput form-control" type="text" placeholder="City" name="city"></input>
+                <input id="id_city" class="textinput textInput form-control" type="text" placeholder="City" name="vol-city"></input>
             </div>
         </div>
         <div id="div_id_state" class="form-group">
@@ -74,7 +74,7 @@
                 State/Province<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_state" class="textinput textInput form-control" type="text" placeholder="State/Province" name="state"></input>
+                <input id="id_state" class="textinput textInput form-control" type="text" placeholder="State/Province" name="vol-state"></input>
             </div>
         </div>
         <div id="div_id_country" class="form-group">
@@ -82,7 +82,7 @@
                 Country<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_country" class="textinput textInput form-control" type="text" placeholder="Country" name="country"></input>
+                <input id="id_country" class="textinput textInput form-control" type="text" placeholder="Country" name="vol-country"></input>
             </div>
         </div>
         <div id="div_id_phone_number" class="form-group">
@@ -90,7 +90,7 @@
                 Phone Number<span class="asteriskField">*</span>
             </label>
             <div class="controls">
-                <input id="id_phone_number" class="textinput textInput form-control" type="text" placeholder="Phone Number" name="phone_number"></input>
+                <input id="id_phone_number" class="textinput textInput form-control" type="text" placeholder="Phone Number" name="vol-phone_number"></input>
             </div>
         </div>
         <div id="div_id_organization" class="form-group">
@@ -99,8 +99,9 @@
             </label>
             <select id="select" class="form-control" name="organization_name">
                 <option value="0">-- Select Organization --</option>
-                <option>Google</option>
-                <option>Microsoft</option>
+                {% for organization in organization_list %}
+                    <option value="{{ organization.id }}">{{ organization.name }}</option>
+                {% endfor %}
             </select>
         </div>
         <div id="div_id_unlisted_organization" class="form-group">
@@ -108,7 +109,7 @@
                 If your organization is not listed above, please provide it here:
             </label>
             <div class="controls">
-                <input id="id_unlisted_organization" class="textinput textInput form-control" type="text" placeholder="Organization" name="unlisted_organization"></input>
+                <input id="id_unlisted_organization" class="textinput textInput form-control" type="text" placeholder="Organization" name="vol-unlisted_organization"></input>
             </div>
         </div>
         <div id="div_id_websites" class="form-group">
@@ -116,18 +117,19 @@
                 Profiles
             </label>
             <div class="controls">
-                <textarea id="id_websites" class="textinput textInput form-control" type="text" placeholder="Include links to any online profiles here" name="websites" rows="5"></textarea>
+                <textarea id="id_websites" class="textinput textInput form-control" type="text" placeholder="Include links to any online profiles here" name="vol-websites" rows="5"></textarea>
             </div>
         </div>
         <div id="div_id_resume_file" class="form-group">
             <label class="control-label">Upload a Resume</label>
+            {{ volunteer_form.resume_file }}
         </div>
         <div id="div_id_resume" class="form-group">
             <label class="control-label" for="id_resume">
                 Resume
             </label>
             <div class="controls">
-                <textarea id="id_resume" class="textinput textInput form-control" type="text" placeholder="Alternatively, include your resume here" name="resume" rows="5"></textarea>
+                <textarea id="id_resume" class="textinput textInput form-control" type="text" placeholder="Alternatively, include your resume here" name="vol-resume" rows="5"></textarea>
             </div>
         </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block">Sign Up</button>

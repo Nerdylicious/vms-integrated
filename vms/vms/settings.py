@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
+from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -29,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# Make sure all apps are specified here
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -64,12 +66,13 @@ WSGI_APPLICATION = 'vms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+# Change these database settings if your database engine, database name, username or password changes
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'vms',
-        'USER' : 'myuser',
-        'PASSWORD' : 'mypassword',
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',    #your database engine
+        'NAME' : 'vms',             #the name of your database
+        'USER' : 'myuser',          #your DBMS username
+        'PASSWORD' : 'mypassword',  #your DBMS password
         'HOST' : 'localhost',
     }
 }
@@ -91,4 +94,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+# Specifies the directory where static files (CSS, JavasScript) are stored
 STATIC_URL = '/static/'
+
+# All uploaded files (such as resumes) are stored in the /srv directory
+# /srv directory contains site-specific data which is served by the system
+MEDIA_ROOT = '/srv/'
+
+# Uploaded files have read and write permissions to the owner only
+FILE_UPLOAD_PERMISSIONS = 0600
+
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0600
+
+# If user fails to authenticate, then they are redirected to the view specified in the reverse_lazy call
+LOGIN_URL = reverse_lazy('auth:user_login')
