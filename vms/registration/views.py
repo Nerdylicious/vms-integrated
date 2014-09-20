@@ -5,6 +5,9 @@ from volunteer.forms import VolunteerForm
 from volunteer.models import Volunteer #Volunteer model needs to be imported so that input type file renders properly
 from volunteer.validation import validate_file
 
+def signup_administrator(request):
+    return render(request, 'registration/signup_administrator.html')
+
 def signup_volunteer(request):
 
     registered = False
