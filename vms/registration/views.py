@@ -42,6 +42,7 @@ def signup_volunteer(request):
                 registered = True
             else:
                 print user_form.errors, volunteer_form.errors
+                return render(request, 'registration/signup_volunteer.html', {'user_form' : user_form, 'volunteer_form' : volunteer_form, 'registered' : registered, 'organization_list' : organization_list,})
         else:
             user_form = UserForm(prefix="usr")
             volunteer_form = VolunteerForm(prefix="vol") 
