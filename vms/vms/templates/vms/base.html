@@ -25,7 +25,11 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right text-uppercase">
                     <li><a href="{% url 'registration:signup_volunteer' %}">Sign Up</a></li>
-                    <li><a href="{% url 'authentication:login_process' %}">Log In</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'authentication:logout_process' %}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'authentication:login_process' %}">Log In</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
