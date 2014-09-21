@@ -22,9 +22,9 @@ def login_process(request):
             else:
                 return HttpResponse("Your account is disabled.")
         else:
-            return HttpResponse("Invalid login details supplied.")
+            return render(request, 'authentication/login.html', {'is_invalid_credentials' : True,})
     else:
-        return render(request, 'authentication/login.html')
+        return render(request, 'authentication/login.html', {'is_invalid_credentials' : False,})
 
 @login_required
 def logout_process(request):

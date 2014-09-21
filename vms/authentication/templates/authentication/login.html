@@ -5,6 +5,11 @@
         {% csrf_token %}
         <h2>Please sign in</h2>
         <hr>
+        {% if is_invalid_credentials %}
+            <div class="alert alert-danger">
+                The username and/or password you specified are not correct.
+            </div>
+        {% endif %}
         <div id="div_id_login" class="form-group">
             <label for="id_login" class="control-label requiredField">
                 Username<span class="asteriskField">*</span>
