@@ -7,7 +7,22 @@
         <hr>
         <div id="div_id_login" class="form-group">
             <label for="id_login" class="control-label requiredField">
+                Username<span class="asteriskField">*</span>
             </label>
+            <div class="controls">
+                <input class="textinput textInput form-control" id="id_login" name="username" placeholder="Username" type="text" autofocus="autofocus">
+            </div>
         </div>
+        <div id="div_id_password" class="form-group">
+            <label for="id_password" class="control-label" requiredField>
+                Password<span class="asteriskField">*</span>
+            </label>
+            <div class="control">
+                <input class="textinput textInput form-control" id="id_password" name="password" placeholder="Password" type="password">
+            </div>
+        </div>
+        <button class="primaryAction btn btn-lg btn-primary btn-block" type="submit">
+            Sign In
+        </button>
     </form>
 {% endblock %}
