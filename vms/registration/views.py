@@ -14,7 +14,6 @@ def signup_administrator(request):
     Only if user is registered and logged in and registered as an
     admin user, he/she is allowed to register others as an admin user
     """
-    
     registered = False
     organization_list = get_organizations_ordered_by_name()
     
