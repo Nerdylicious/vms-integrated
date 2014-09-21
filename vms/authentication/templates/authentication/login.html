@@ -1,0 +1,13 @@
+{% extends "vms/base.html" %}
+
+{% block content %}
+    <form class="login form-signin" role="form" method="POST" action="{% url 'authentication:login_process' %}">
+        {% csrf_token %}
+        <h2>Please sign in</h2>
+        <hr>
+        <div id="div_id_login" class="form-group">
+            <label for="id_login" class="control-label requiredField">
+            </label>
+        </div>
+    </form>
+{% endblock %}

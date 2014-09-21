@@ -4,7 +4,7 @@
     <form class="signup form-signup" id="signup_form" method="post" action="{% url 'registration:signup_administrator' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <h2>Sign Up</h2>
-        <hr></hr>
+        <hr>
         {% if user_form.username.errors %}
             <div id="div_id_username" class="form-group has-error">
                 <label class="control-label requiredField" for="id_username">
