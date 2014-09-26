@@ -1,4 +1,6 @@
 from administrator.forms import AdministratorForm
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from organization.services import *
 from registration.forms import UserForm
@@ -41,7 +43,8 @@ def signup_administrator(request):
                     
                 administrator.save()
                 registered = True
-                
+
+                return HttpResponseRedirect(reverse('home:index'))
             else:
                 print user_form.errors, administrator_form.errors
                 return render(request, 'registration/signup_administrator.html', {'user_form' : user_form, 'administrator_form' : administrator_form, 'registered' : registered, 'organization_list' : organization_list,})
@@ -89,6 +92,8 @@ def signup_volunteer(request):
 
                 volunteer.save()
                 registered = True
+
+                return HttpResponseRedirect(reverse('home:index'))
             else:
                 print user_form.errors, volunteer_form.errors
                 return render(request, 'registration/signup_volunteer.html', {'user_form' : user_form, 'volunteer_form' : volunteer_form, 'registered' : registered, 'organization_list' : organization_list,})
