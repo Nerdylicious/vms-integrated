@@ -9,6 +9,7 @@ from django.shortcuts import render
 from organization.services import *
 from volunteer.forms import * 
 from volunteer.models import Volunteer
+from volunteer.services import * 
 from volunteer.validation import *
 
 @login_required
