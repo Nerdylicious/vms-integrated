@@ -31,18 +31,18 @@
                     </h4>
                 </div>
                 <div class="panel-body">
-                    <label><h4><span class="label label-info">Email</span></h4></label> {{ volunteer.email }}
+                    <label><h4><span class="label label-default">Email</span></h4></label> {{ volunteer.email }}
                     <br>
-                    <label><h4><span class="label label-info">City</span></h4></label> {{ volunteer.city }}
+                    <label><h4><span class="label label-default">City</span></h4></label> {{ volunteer.city }}
                     <br>
-                    <label><h4><span class="label label-info">State/Province</span></h4></label> {{ volunteer.state }}
+                    <label><h4><span class="label label-default">State/Province</span></h4></label> {{ volunteer.state }}
                     <br>
-                    <label><h4><span class="label label-info">Country</span></h4></label> {{ volunteer.country }}
+                    <label><h4><span class="label label-default">Country</span></h4></label> {{ volunteer.country }}
                     <br>
                     {% if volunteer.organization %}
-                        <label><h4><span class="label label-info">Organization</span></h4></label> {{ volunteer.organization.name }}
+                        <label><h4><span class="label label-default">Organization</span></h4></label> {{ volunteer.organization.name }}
                     {% elif volunteer.unlisted_organization  %}
-                        <label><h4><span class="label label-info">Organization</span></h4></label> {{ volunteer.unlisted_organization }}
+                        <label><h4><span class="label label-default">Organization</span></h4></label> {{ volunteer.unlisted_organization }}
                     {% else %}
                     {% endif %}
                 </div>
