@@ -13,6 +13,24 @@ from volunteer.services import *
 from volunteer.validation import *
 
 @login_required
+def download_resume(request, volunteer_id):
+    user = request.user
+    if int(user.volunteer.id) == int(volunteer_id):
+        if request.method == 'POST':
+            basename = get_volunteer_resume_file_url(volunteer_id)
+            if basename:
+                filename = settings.MEDIA_ROOT + basename 
+                wrapper = FileWrapper(file(filename))
+                response = HttpResponse(wrapper)
+                response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(filename)
+                response['Content-Length'] = os.path.getsize(filename)
+                return response
+            else:
+                raise Http404
+    else:
+        return HttpResponse(status=403)
+        
+@login_required
 def profile(request, volunteer_id):
 
     volunteer = get_volunteer_by_id(volunteer_id)

@@ -95,7 +95,10 @@
                         </div>
                         <div id="collapseResumeFile" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <button class="btn btn-success">Download Resume</button>
+                                <form action="{% url 'volunteer:download_resume' volunteer.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-success" type="submit">Download Resume</button>
+                                </form>
                             </div>
                         </div>
                     </div>
