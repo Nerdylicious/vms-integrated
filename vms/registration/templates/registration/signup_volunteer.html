@@ -79,7 +79,7 @@
                     About
                 </label>
                 <div class="controls">
-                    <textarea id="id_description" class="textinput textInput form-control" type="text" placeholder="Include a short biography of yourself" name="vol-description" rows="5" value="{% if volunteer_form.description.value %}{{ volunteer_form.description.value }}{% endif %}"></textarea>
+                    <textarea id="id_description" class="textinput textInput form-control" type="text" placeholder="Include a short biography of yourself" name="vol-description" rows="5">{% if volunteer_form.description.value %}{{ volunteer_form.description.value }}{% endif %}</textarea>
                 </div>
             </div>
         {% endif %}
