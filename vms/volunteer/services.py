@@ -92,7 +92,7 @@ def search_volunteers(first_name, last_name, city, state, country, organization)
             #organization associated with a volunteer can be null
             #therefore exclude from the search query volunteers with no associated organization
             #then filter by organization_name
-            search_query = search_query.exclude(organization__isnull=True).filter(organization__organization_name__icontains=organization)
+            search_query = search_query.exclude(organization__isnull=True).filter(organization__name__icontains=organization)
         else:
             #unlisted_organization associated with a volunteer can be left blank
             #therefore exclude from the search query volunteers with a blank unlisted_organization
