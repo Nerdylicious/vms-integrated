@@ -7,7 +7,7 @@
             {{ user.volunteer.first_name }} {{ user.volunteer.last_name }}
         </h1>
         <hr>
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div class="panel-group" id="accordion_desc">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -31,18 +31,19 @@
                     </h4>
                 </div>
                 <div class="panel-body">
-                    <label><h4><span class="label label-default">Email</span></h4></label> {{ volunteer.email }}
+                    <!-- Better to have css padding instead of nbsp to insert spaces -->
+                    <label><h4><span class="label label-info">Email</span></h4></label>&nbsp&nbsp&nbsp{{ volunteer.email }}
                     <br>
-                    <label><h4><span class="label label-default">City</span></h4></label> {{ volunteer.city }}
+                    <label><h4><span class="label label-info">City</span></h4></label>&nbsp&nbsp&nbsp{{ volunteer.city }}
                     <br>
-                    <label><h4><span class="label label-default">State/Province</span></h4></label> {{ volunteer.state }}
+                    <label><h4><span class="label label-info">State/Province</span></h4></label>&nbsp&nbsp&nbsp{{ volunteer.state }}
                     <br>
-                    <label><h4><span class="label label-default">Country</span></h4></label> {{ volunteer.country }}
+                    <label><h4><span class="label label-info">Country</span></h4></label>&nbsp&nbsp&nbsp{{ volunteer.country }}
                     <br>
                     {% if volunteer.organization %}
-                        <label><h4><span class="label label-default">Organization</span></h4></label> {{ volunteer.organization.name }}
+                        <label><h4><span class="label label-info">Organization</span></h4></label>&nbsp&nbsp&nbsp{{ volunteer.organization.name }}
                     {% elif volunteer.unlisted_organization  %}
-                        <label><h4><span class="label label-default">Organization</span></h4></label> {{ volunteer.unlisted_organization }}
+                        <label><h4><span class="label label-info">Organization</span></h4></label>&nbsp&nbsp&nbsp{{ volunteer.unlisted_organization }}
                     {% else %}
                     {% endif %}
                 </div>
@@ -93,7 +94,7 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapseResumeFile" class="panel-collapse collapse">
+                        <div id="collapseResumeFile" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <form action="{% url 'volunteer:download_resume' volunteer.id %}" method="post">
                                     {% csrf_token %}
