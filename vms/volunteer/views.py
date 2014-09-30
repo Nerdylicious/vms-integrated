@@ -29,6 +29,55 @@ def download_resume(request, volunteer_id):
                 raise Http404
     else:
         return HttpResponse(status=403)
+
+@login_required
+def edit(request, volunteer_id):
+
+    volunteer = get_volunteer_by_id(volunteer_id)
+    if volunteer:
+        user = request.user
+        if int(user.volunteer.id) == int(volunteer_id):
+            organization_list = get_organizations_ordered_by_name()
+            if request.method == 'POST':
+                form = VolunteerForm(request.POST, request.FILES, instance=volunteer)
+                if form.is_valid():
+                    #if a resume has been uploaded
+                    if 'resume_file' in request.FILES:
+                        my_file = form.cleaned_data['resume_file']
+                        if validate_file(my_file):
+                            #delete an old uploaded resume if it exists
+                            has_file = has_resume_file(volunteer_id)
+                            if has_file:
+                                try:
+                                    delete_volunteer_resume(volunteer_id)
+                                except:
+                                    raise Http404
+                        else:
+                            return render(request, 'volunteer/edit.html', {'form' : form, 'organization_list' : organization_list, 'volunteer' : volunteer,})
+                    
+                    volunteer_to_edit = form.save(commit=False)
+
+                    organization_id = request.POST.get('organization_name')
+                    organization = get_organization_by_id(organization_id)
+                    if organization:
+                        volunteer_to_edit.organization = organization
+                    else:
+                        volunteer_to_edit.organization = None
+
+                    #update the volunteer
+                    volunteer_to_edit.save()
+                    return HttpResponseRedirect(reverse('volunteer:profile', args=(volunteer_id,)))
+                else:
+                    print form.errors
+                    return render(request, 'volunteer/edit.html', {'form' : form, 'organization_list' : organization_list, 'volunteer' : volunteer,})
+            else:
+                #create a form to change an existing volunteer
+                form = VolunteerForm(instance=volunteer)
+                return render(request, 'volunteer/edit.html', {'form' : form, 'organization_list' : organization_list, 'volunteer' : volunteer,})
+        else:
+            return HttpResponse(status=403)
+    else:
+        raise Http404
         
 @login_required
 def profile(request, volunteer_id):
