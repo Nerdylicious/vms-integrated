@@ -270,12 +270,26 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Upload Updated Resume</label>
-                    <div class="col-md-8">
-                        <input name="resume_file" type="file">
+                {% if resume_invalid %}
+                    <div class="form-group has-error">
+                        <label class="col-md-2 control-label">Upload Updated Resume</label>
+                        <div class="col-md-8">
+                            <input name="resume_file" type="file">
+                            <p class="help-block">
+                                <strong>
+                                    Uploaded file is invalid.
+                                </strong>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Upload Updated Resume</label>
+                        <div class="col-md-8">
+                            <input name="resume_file" type="file">
+                        </div>
+                    </div>
+                {% endif %}
                 {% if form.resume.errors %}
                     <div class="form-group has-error">
                         <label class="col-md-2 control-label">Resume</label>
@@ -306,8 +320,8 @@
             </fieldset>
         </form>
     </div>
-    {% if form.resume_file.value %}
-        <form action="" method="post">
+    {% if form.resume_file.value and not resume_invalid %}
+        <form action="{% url 'volunteer:delete_resume' volunteer.id %}" method="post">
             {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">Uploads</div>

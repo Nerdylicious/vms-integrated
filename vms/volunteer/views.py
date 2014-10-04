@@ -29,6 +29,19 @@ def download_resume(request, volunteer_id):
                 raise Http404
     else:
         return HttpResponse(status=403)
+        
+@login_required
+def delete_resume(request, volunteer_id):
+    user = request.user
+    if int(user.volunteer.id) == int(volunteer_id):
+        if request.method == 'POST':
+            try:
+                delete_volunteer_resume(volunteer_id)
+                return HttpResponseRedirect(reverse('volunteer:profile', args=(volunteer_id,)))
+            except:
+                raise Http404
+    else:
+        return HttpResponse(status=403)  
 
 @login_required
 def edit(request, volunteer_id):
@@ -53,7 +66,7 @@ def edit(request, volunteer_id):
                                 except:
                                     raise Http404
                         else:
-                            return render(request, 'volunteer/edit.html', {'form' : form, 'organization_list' : organization_list, 'volunteer' : volunteer,})
+                            return render(request, 'volunteer/edit.html', {'form' : form, 'organization_list' : organization_list, 'volunteer' : volunteer, 'resume_invalid' : True,})
                     
                     volunteer_to_edit = form.save(commit=False)
 
