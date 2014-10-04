@@ -106,3 +106,7 @@ def profile(request, volunteer_id):
         #if Http404 is raised at any point in a view function, Django will catch it and return the standard
         #error page, along with an HTTP error code 404
         raise Http404
+
+@login_required
+def search(request):
+    return render(request, 'volunteer/search.html')
