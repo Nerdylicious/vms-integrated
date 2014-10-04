@@ -306,4 +306,15 @@
             </fieldset>
         </form>
     </div>
+    {% if form.resume_file.value %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">Uploads</div>
+                <div class="panel-body">
+                    <button class="btn btn-danger" type="submit">Delete Uploaded Resume</button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}
