@@ -8,4 +8,4 @@ from organization.services import *
 @login_required
 def list(request):
     organization_list = get_organizations_ordered_by_name()
-    return render(request, 'organization/list.html')
+    return render(request, 'organization/list.html', {'organization_list' : organization_list})
