@@ -18,6 +18,7 @@ def create(request):
         form = OrganizationForm()
         return render(request, 'organization/create.html', {'form' : form,})
 
+@login_required
 def delete(request):
     return render(request, 'organization/delete.html')
 
