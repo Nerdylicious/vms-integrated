@@ -17,6 +17,13 @@ def create(request):
     else:
         form = OrganizationForm()
         return render(request, 'organization/create.html', {'form' : form,})
+
+def delete(request):
+    return render(request, 'organization/delete.html')
+
+@login_required
+def edit(request, organization_id):
+    return render(request, 'organization/edit.html')
         
 @login_required
 def list(request):

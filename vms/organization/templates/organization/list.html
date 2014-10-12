@@ -18,10 +18,10 @@
                 <tr>
                     <td>{{ organization.name }}</td>
                     <td>
-                        <a href="#" class="btn btn-info btn-sm">Edit</a>
+                        <a href="{% url 'organization:edit' organization.id %}" class="btn btn-info btn-sm">Edit</a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'organization:delete' %}" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
