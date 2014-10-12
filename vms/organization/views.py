@@ -19,7 +19,11 @@ def create(request):
         return render(request, 'organization/create.html', {'form' : form,})
 
 @login_required
-def delete(request):
+def delete(request, organization_id):
+
+    if request.method == 'POST':
+        delete_organization(organization_id)
+        return HttpResponseRedirect(reverse('organization:list'))
     return render(request, 'organization/delete.html')
 
 @login_required

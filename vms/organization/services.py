@@ -1,6 +1,15 @@
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from organization.models import Organization
 
+def delete_organization(organization_id):
+
+    organization = get_organization_by_id(organization_id)
+    
+    if organization:
+        organization.delete()
+    else:
+        return ObjectDoesNotExist
+
 def get_organization_by_id(organization_id):
     
     is_valid = True
