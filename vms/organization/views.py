@@ -23,7 +23,10 @@ def delete(request, organization_id):
 
     if request.method == 'POST':
         result = delete_organization(organization_id)
-        return HttpResponseRedirect(reverse('organization:list'))
+        if result:
+            return HttpResponseRedirect(reverse('organization:list'))
+        else:
+            return render(request, 'organization/delete_error.html')
     return render(request, 'organization/delete.html')
 
 @login_required
