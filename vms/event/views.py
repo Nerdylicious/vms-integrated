@@ -4,5 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 @login_required
+def create(request):
+    return render(request, 'event/create.html')
+
+@login_required
 def list(request):
-    return HttpResponse("test")
+    return render(request, 'event/list.html')
