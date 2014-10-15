@@ -22,7 +22,7 @@ def create(request):
 def delete(request, organization_id):
 
     if request.method == 'POST':
-        delete_organization(organization_id)
+        result = delete_organization(organization_id)
         return HttpResponseRedirect(reverse('organization:list'))
     return render(request, 'organization/delete.html')
 
