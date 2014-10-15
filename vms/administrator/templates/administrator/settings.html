@@ -4,8 +4,8 @@
     <div class="spacer"></div>
     <ul class="nav nav-tabs">
         <li><a href="{% url 'organization:list' %}">Organizations</a></li>
-        <li><a href="{% url 'organization:list' %}">Jobs</a></li>
-        <li><a href="{% url 'organization:list' %}">Events</a></li>
+        <li><a href="#">Jobs</a></li>
+        <li><a href="{% url 'event:list' %}">Events</a></li>
     </ul>
     {% block setting_content %}
     {% endblock %}
