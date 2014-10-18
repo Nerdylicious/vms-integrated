@@ -19,6 +19,9 @@ def create(request):
         form = EventForm()
         return render(request, 'event/create.html', {'form' : form,})
 
+def edit(request):
+    return render(request, 'event/edit.html')
+
 @login_required
 def list(request):
     event_list = get_events_ordered_by_name()

@@ -1,0 +1,13 @@
+{% extends "administrator/settings.html" %}
+
+{% block setting_content %}
+    <div class="spacer"></div>
+    <div class="well">
+        <form class="form-horizontal" action="" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Edit Event</legend>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
