@@ -15,3 +15,7 @@ def get_event_by_id(event_id):
         result = event
 
     return result
+
+def get_events_ordered_by_name():
+    event_list = Event.objects.all().order_by('name')
+    return event_list

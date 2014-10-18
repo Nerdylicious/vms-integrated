@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from event.forms import EventForm
+from event.services import *
 
 @login_required
 def create(request):
@@ -20,4 +21,5 @@ def create(request):
 
 @login_required
 def list(request):
-    return render(request, 'event/list.html')
+    event_list = get_events_ordered_by_name()
+    return render(request, 'event/list.html', {'event_list' : event_list})
