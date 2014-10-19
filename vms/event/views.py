@@ -19,6 +19,18 @@ def create(request):
         form = EventForm()
         return render(request, 'event/create.html', {'form' : form,})
 
+@login_required
+def delete(request, event_id):
+
+    if request.method == 'POST':
+        result = delete_event(event_id)
+        if result:
+            return HttpResponseRedirect(reverse('event:list'))
+        else:
+            return HttpResponse("Error")
+    return render(request, 'event/delete.html', {'event_id' : event_id})
+
+@login_required
 def edit(request, event_id):
 
     event = None

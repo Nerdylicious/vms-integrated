@@ -27,7 +27,7 @@ def delete(request, organization_id):
             return HttpResponseRedirect(reverse('organization:list'))
         else:
             return render(request, 'organization/delete_error.html')
-    return render(request, 'organization/delete.html')
+    return render(request, 'organization/delete.html', {'organization_id' : organization_id})
 
 @login_required
 def edit(request, organization_id):
