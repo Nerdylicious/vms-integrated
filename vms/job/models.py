@@ -2,7 +2,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 
 class Job(models.Model):
-    job_title = models.CharField(
+    name = models.CharField(
         max_length=75,
         validators=[
             RegexValidator(

@@ -3,7 +3,7 @@
 {% block setting_content %}
     <div class="spacer"></div>
     <div class="well">
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal" action="{% url 'job:create' %}" method="post">
             {% csrf_token %}
             <fieldset>
                 <legend>Create Job</legend>

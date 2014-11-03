@@ -2,11 +2,24 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from job.models import Job
+from job.forms import JobForm
+from job.services import *
 
 @login_required
 def create(request):
-    return render(request, 'job/create.html')
+    if request.method == 'POST':
+        form = JobForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('job:list'))
+        else:
+            return render(request, 'job/create.html', {'form' : form,})
+    else:
+        form = JobForm()
+        return render(request, 'job/create.html', {'form' : form,})
 
 @login_required
 def list(request):
-    return render(request, 'job/list.html')
+    job_list = get_jobs_ordered_by_title()
+    return render(request, 'job/list.html', {'job_list' : job_list})
