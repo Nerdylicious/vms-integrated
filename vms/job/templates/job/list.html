@@ -10,6 +10,9 @@
             <th>Job Name</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Details</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </thead>
         <tbody>
             {% for job in job_list %}
@@ -17,6 +20,15 @@
                     <td>{{ job.name }}</td>
                     <td>{{ job.start_date }}</td>
                     <td>{{ job.end_date }}</td>
+                    <td>
+                        <a href="#" class="btn btn-default btn-sm">Details</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm">Edit</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
