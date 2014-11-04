@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+from event.models import Event
 from job.models import Job
 from job.services import *
 from volunteer.models import Volunteer
@@ -9,20 +10,29 @@ class JobMethodTests(TestCase):
 
     def test_get_job_by_id(self):
 
+        e1 = Event(name = "Software Conference",
+                start_date = "2012-10-22",
+                end_date = "2012-10-25")
+
+        e1.save()
+
         j1 = Job(name = "Software Developer",
                 start_date = "2012-10-22",
                 end_date = "2012-10-23",
-                description = "A software job")
+                description = "A software job",
+                event = e1)
 
         j2 = Job(name = "Systems Administrator",
                 start_date = "2012-9-1",
                 end_date = "2012-10-26",
-                description = "A systems administrator job")
+                description = "A systems administrator job",
+                event = e1)
 
         j3 = Job(name = "Project Manager",
                 start_date = "2012-1-2",
                 end_date = "2012-2-2",
-                description = "A management job")
+                description = "A management job",
+                event = e1)
 
         j1.save()
         j2.save()
@@ -55,20 +65,29 @@ class JobMethodTests(TestCase):
 
     def test_get_jobs_ordered_by_title(self):
 
+        e1 = Event(name = "Software Conference",
+                start_date = "2012-10-22",
+                end_date = "2012-10-25")
+
+        e1.save()
+
         j1 = Job(name = "Software Developer",
                 start_date = "2012-10-22",
                 end_date = "2012-10-23",
-                description = "A software job")
+                description = "A software job",
+                event = e1)
 
         j2 = Job(name = "Systems Administrator",
                 start_date = "2012-9-1",
                 end_date = "2012-10-26",
-                description = "A systems administrator job")
+                description = "A systems administrator job",
+                event = e1)
 
         j3 = Job(name = "Project Manager",
                 start_date = "2012-1-2",
                 end_date = "2012-2-2",
-                description = "A management job")
+                description = "A management job",
+                event = e1)
 
         j1.save()
         j2.save()
