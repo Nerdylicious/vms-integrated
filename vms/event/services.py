@@ -7,8 +7,11 @@ def delete_event(event_id):
 
     result = True
     event = get_event_by_id(event_id)
+    #check if there are currently any jobs associated with this event
+    jobs_in_event = event.job_set.all()
 
-    if event:
+    #can only delete an event if no jobs are currently associated with it
+    if event and (not jobs_in_event):
         event.delete()
     else:
         result = False

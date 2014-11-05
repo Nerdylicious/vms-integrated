@@ -27,7 +27,7 @@ def delete(request, event_id):
         if result:
             return HttpResponseRedirect(reverse('event:list'))
         else:
-            return HttpResponse("Error")
+            return render(request, 'event/delete_error.html')
     return render(request, 'event/delete.html', {'event_id' : event_id})
 
 @login_required
