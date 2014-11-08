@@ -2,6 +2,18 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from job.models import Job
 
+def delete_job(job_id):
+
+    result = True
+    job = get_job_by_id(job_id)
+
+    if job:
+        job.delete()
+    else:
+        result = False
+
+    return result
+
 def get_job_by_id(job_id):
 
     is_valid = True

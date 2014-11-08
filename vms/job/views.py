@@ -33,9 +33,12 @@ def create(request):
 def delete(request, job_id):
     
     if request.method == 'POST':
-        return HttpResponse('deleted')
-    else:
-        return render(request, 'job/delete.html', {'job_id' : job_id})
+        result = delete_job(job_id)
+        if result:
+            return HttpResponseRedirect(reverse('job:list'))
+        else:
+            return render(request, 'job/delete_error.html', {'job_id' : job_id})
+    return render(request, 'job/delete.html', {'job_id' : job_id})
 
 @login_required
 def edit(request, job_id):
