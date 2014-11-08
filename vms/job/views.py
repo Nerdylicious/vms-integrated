@@ -41,6 +41,11 @@ def delete(request, job_id):
     return render(request, 'job/delete.html', {'job_id' : job_id})
 
 @login_required
+def details(request, job_id):
+
+    return render(request, 'job/details.html')
+
+@login_required
 def edit(request, job_id):
 
     job = None
