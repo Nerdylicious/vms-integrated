@@ -43,7 +43,11 @@ def delete(request, job_id):
 @login_required
 def details(request, job_id):
 
-    return render(request, 'job/details.html')
+    job = get_job_by_id(job_id)
+    if job:
+        return render(request, 'job/details.html', {'job' : job})
+    else:
+        raise Http404
 
 @login_required
 def edit(request, job_id):
