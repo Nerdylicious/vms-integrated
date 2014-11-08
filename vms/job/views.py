@@ -30,6 +30,14 @@ def create(request):
         return render(request, 'job/create.html', {'form' : form, 'event_list' : event_list})
 
 @login_required
+def delete(request, job_id):
+    
+    if request.method == 'POST':
+        return HttpResponse('deleted')
+    else:
+        return render(request, 'job/delete.html', {'job_id' : job_id})
+
+@login_required
 def edit(request, job_id):
 
     job = None
