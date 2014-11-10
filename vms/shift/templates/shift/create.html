@@ -111,14 +111,36 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if form.start_time.errors %}
+                {% if form.date.errors %}
                     <div class="form-group has-error">
-                        <label class="col-md-2 control-label">Start Time</label>
+                        <label class="col-md-2 control-label">Date</label>
                         <div class="col-md-8">
-                            <input class="form-control" placeholder="Start Time" type="text" name="start_time" value="{% if form.start_time.value %}{{ form.start_time.value }}{% endif %}">
+                            <input class="form-control" placeholder="Date" type="text" name="date" value="{% if form.date.value %}{{ form.date.value }}{% endif %}">
                             <p class="help-block">
                                 <strong>
-                                    {% for error in form.start_time.errors %}
+                                    {% for error in form.date.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Date</label>
+                        <div class="col-md-8">
+                            <input class="form-control" placeholder="Date" type="text" name="date" value="{% if form.date.value %}{{ form.date.value }}{% endif %}">
+                        </div>
+                    </div>
+                {% endif %}
+                {% if form.date.errors %}
+                    <div class="form-group has-error">
+                        <label class="col-md-2 control-label">Date</label>
+                        <div class="col-md-8">
+                            <input class="form-control" placeholder="Date" type="text" name="date" value="{% if form.date.value %}{{ form.date.value }}{% endif %}">
+                            <p class="help-block">
+                                <strong>
+                                    {% for error in form.date.errors %}
                                         {{ error }}
                                     {% endfor %}
                                 </strong>
@@ -152,6 +174,28 @@
                         <label class="col-md-2 control-label">End Time</label>
                         <div class="col-md-8">
                             <input class="form-control" placeholder="End Time" type="text" name="end_time" value="{% if form.end_time.value %}{{ form.end_time.value }}{% endif %}">
+                        </div>
+                    </div>
+                {% endif %}
+                {% if form.max_volunteers.errors %}
+                    <div class="form-group has-error">
+                        <label class="col-md-2 control-label">Maximum number of volunteers that can sign up for this shift</label>
+                        <div class="col-md-8">
+                            <input class="form-control" placeholder="Maximum number of volunteers" type="text" name="max_volunteers" value="{% if form.max_volunteers.value %}{{ form.max_volunteers.value }}{% endif %}">
+                            <p class="help-block">
+                                <strong>
+                                    {% for error in form.max_volunteers.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Maximum number of volunteers that can sign up for this shift</label>
+                        <div class="col-md-8">
+                            <input class="form-control" placeholder="Maximum number of volunteers" type="text" name="max_volunteers" value="{% if form.max_volunteers.value %}{{ form.max_volunteers.value }}{% endif %}">
                         </div>
                     </div>
                 {% endif %}
