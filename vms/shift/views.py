@@ -12,3 +12,7 @@ def create(request):
 def list_jobs(request):
     job_list = get_jobs_ordered_by_title()
     return render(request, 'shift/list_jobs.html', {'job_list' : job_list})
+
+@login_required
+def list_shifts(request):
+    return render(request, 'shift/list_shifts.html')
