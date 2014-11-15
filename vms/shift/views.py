@@ -18,7 +18,6 @@ def create(request, job_id):
                     shift.save()
                     return HttpResponse('Shift created')
                 else:
-                    form = ShiftForm()
                     return render(request, 'shift/create.html', {'form' : form, 'job_id' : job_id,})
             else:
                 raise Http404

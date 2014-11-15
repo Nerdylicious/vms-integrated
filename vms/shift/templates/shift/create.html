@@ -3,7 +3,7 @@
 {% block setting_content %}
     <div class="spacer"></div>
     <div class="well">
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal" action="{% url 'shift:create' job_id %}" method="post">
             {% csrf_token %}
             <fieldset>
                 <legend>Create Shift</legend>
@@ -55,14 +55,14 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if form.date.errors %}
+                {% if form.start_time.errors %}
                     <div class="form-group has-error">
-                        <label class="col-md-2 control-label">Date</label>
+                        <label class="col-md-2 control-label">Start Time</label>
                         <div class="col-md-8">
-                            <input class="form-control" placeholder="Date" type="text" name="date" value="{% if form.date.value %}{{ form.date.value }}{% endif %}">
+                            <input class="form-control" placeholder="Start Time" type="text" name="start_time" value="{% if form.start_time.value %}{{ form.start_time.value }}{% endif %}">
                             <p class="help-block">
                                 <strong>
-                                    {% for error in form.date.errors %}
+                                    {% for error in form.start_time.errors %}
                                         {{ error }}
                                     {% endfor %}
                                 </strong>
