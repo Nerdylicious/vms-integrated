@@ -4,6 +4,8 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from job.services import *
 from shift.forms import ShiftForm
+from shift.models import Shift
+from shift.services import *
 
 @login_required
 def create(request, job_id):
@@ -34,4 +36,12 @@ def list_jobs(request):
 
 @login_required
 def list_shifts(request, job_id):
-    return render(request, 'shift/list_shifts.html', {'job_id' : job_id})
+    if job_id:
+        job = get_job_by_id(job_id)
+        if job:
+            shift_list = get_shifts_ordered_by_date(job_id)
+            return render(request, 'shift/list_shifts.html', {'shift_list' : shift_list, 'job_id' : job_id})
+        else:
+            raise Http404
+    else:
+        raise Http404

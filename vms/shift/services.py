@@ -1,6 +1,7 @@
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from job.models import Job
+from shift.models import Shift
 from volunteer.services import *
 
 def get_shifts_ordered_by_date(j_id):
