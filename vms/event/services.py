@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from event.models import Event
 
-#later, need to check that this event is not accociated with any jobs, 
+#need to check that this event is not accociated with any jobs, 
 #otherwise the jobs that it is associated with will be cascade deleted
 def delete_event(event_id):
 

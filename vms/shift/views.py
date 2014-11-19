@@ -37,7 +37,7 @@ def delete(request, shift_id):
         if result:
             return HttpResponseRedirect(reverse('shift:list_jobs'))
         else:
-            return HttpResponse('error')
+            return render(request, 'shift/delete_error.html')
     return render(request, 'shift/delete.html', {'shift_id' : shift_id})
 
 @login_required

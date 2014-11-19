@@ -6,8 +6,9 @@ def delete_job(job_id):
 
     result = True
     job = get_job_by_id(job_id)
+    shifts_in_job = job.shift_set.all()
 
-    if job:
+    if job and (not shifts_in_job):
         job.delete()
     else:
         result = False
