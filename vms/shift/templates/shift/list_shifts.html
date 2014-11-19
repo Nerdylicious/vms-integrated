@@ -29,7 +29,7 @@
                             <a href="" class="btn btn-default btn-sm">Details</a>
                         </td>
                         <td>
-                            <a href="" class="btn btn-info btn-sm">Edit</a>
+                            <a href="{% url 'shift:edit' shift.id %}" class="btn btn-info btn-sm">Edit</a>
                         </td>
                         <td>
                             <a href="{% url 'shift:delete' shift.id %}" class="btn btn-danger btn-sm">Delete</a>

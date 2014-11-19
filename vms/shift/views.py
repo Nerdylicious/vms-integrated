@@ -41,6 +41,10 @@ def delete(request, shift_id):
     return render(request, 'shift/delete.html', {'shift_id' : shift_id})
 
 @login_required
+def edit(request, shift_id):
+    return render(request, 'shift/edit.html')
+
+@login_required
 def list_jobs(request):
     job_list = get_jobs_ordered_by_title()
     return render(request, 'shift/list_jobs.html', {'job_list' : job_list})
