@@ -30,6 +30,17 @@ def create(request, job_id):
         raise Http404
 
 @login_required
+def delete(request, shift_id):
+
+    if request.method == 'POST':
+        result = delete_shift(shift_id)
+        if result:
+            return HttpResponseRedirect(reverse('shift:list_jobs'))
+        else:
+            return HttpResponse('error')
+    return render(request, 'shift/delete.html', {'shift_id' : shift_id})
+
+@login_required
 def list_jobs(request):
     job_list = get_jobs_ordered_by_title()
     return render(request, 'shift/list_jobs.html', {'job_list' : job_list})
