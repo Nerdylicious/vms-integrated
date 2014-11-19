@@ -18,7 +18,7 @@ def create(request, job_id):
                     shift = form.save(commit=False)
                     shift.job = job
                     shift.save()
-                    return HttpResponse('Shift created')
+                    return HttpResponseRedirect(reverse('shift:list_shifts', args=(job_id,)))
                 else:
                     return render(request, 'shift/create.html', {'form' : form, 'job_id' : job_id,})
             else:
