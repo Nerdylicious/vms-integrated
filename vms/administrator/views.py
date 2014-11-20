@@ -5,4 +5,4 @@ from django.shortcuts import render
 
 @login_required
 def settings(request):
-    return HttpResponseRedirect(reverse('organization:list'))
+    return HttpResponseRedirect(reverse('event:list'))

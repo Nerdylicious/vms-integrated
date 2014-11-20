@@ -80,3 +80,7 @@ def edit(request, job_id):
 def list(request):
     job_list = get_jobs_ordered_by_title()
     return render(request, 'job/list.html', {'job_list' : job_list})
+
+@login_required
+def list_sign_up(request, event_id):
+    return HttpResponse('sign up')
