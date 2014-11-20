@@ -33,7 +33,7 @@
                     <div class="form-group has-error">
                         <label class="col-md-2 control-label">Start Time</label>
                         <div class="col-md-8">
-                            <input class="form-control" placeholder="MM/DD/YYYY" type="text" name="start_time" value="{% if form.start_time.value %}{{ form.start_time.value|time:"H:i" }}{% endif %}">
+                            <input class="form-control" placeholder="MM/DD/YYYY" type="text" name="start_time" value="{{ form.start_time.value|time:"H:i" }}">
                             <p class="help-block">
                                 <strong>
                                     {% for error in form.start_time.errors %}
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Start Time</label>
                         <div class="col-md-8">
-                            <input class="form-control" placeholder="HH:MM" type="text" name="start_time" value="{% if form.start_time.value %}{{ form.start_time.value|time:"H:i" }}{% endif %}">
+                            <input class="form-control" placeholder="HH:MM" type="text" name="start_time" value="{{ form.start_time.value|time:"H:i" }}">
                         </div>
                     </div>
                 {% endif %}
@@ -55,7 +55,7 @@
                     <div class="form-group has-error">
                         <label class="col-md-2 control-label">End Time</label>
                         <div class="col-md-8">
-                            <input class="form-control" placeholder="HH:MM" type="text" name="end_time" value="{% if form.end_time.value %}{{ form.end_time.value|time:"H:i" }}{% endif %}">
+                            <input class="form-control" placeholder="HH:MM" type="text" name="end_time" value="{{ form.end_time.value|time:"H:i" }}">
                             <p class="help-block">
                                 <strong>
                                     {% for error in form.end_time.errors %}
@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">End Time</label>
                         <div class="col-md-8">
-                            <input class="form-control" placeholder="HH:MM" type="text" name="end_time" value="{% if form.end_time.value %}{{ form.end_time.value|time:"H:i" }}{% endif %}">
+                            <input class="form-control" placeholder="HH:MM" type="text" name="end_time" value="{{ form.end_time.value|time:"H:i" }}">
                         </div>
                     </div>
                 {% endif %}

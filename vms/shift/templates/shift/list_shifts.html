@@ -12,7 +12,6 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Maximum # of Volunteers</th>
-                <th>Details</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </thead>
@@ -23,9 +22,6 @@
                         <td>{{ shift.start_time }}</td>
                         <td>{{ shift.end_time }}</td>
                         <td>{{ shift.max_volunteers }}</td>
-                        <td>
-                            <a href="" class="btn btn-default btn-sm">Details</a>
-                        </td>
                         <td>
                             <a href="{% url 'shift:edit' shift.id %}" class="btn btn-info btn-sm">Edit</a>
                         </td>
