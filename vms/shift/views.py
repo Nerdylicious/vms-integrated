@@ -42,7 +42,21 @@ def delete(request, shift_id):
 
 @login_required
 def edit(request, shift_id):
-    return render(request, 'shift/edit.html')
+
+    shift = None
+    if shift_id:
+        shift = get_shift_by_id(shift_id)
+
+    if request.method == 'POST':
+        form = ShiftForm(request.POST, instance=shift)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('shift:list_shifts', args=(shift.job.id,)))
+        else:
+            return render(request, 'shift/edit.html', {'form' : form, 'shift' : shift})
+    else:
+        form = ShiftForm(instance=shift)
+        return render(request, 'shift/edit.html', {'form' : form, 'shift' : shift})
 
 @login_required
 def list_jobs(request):

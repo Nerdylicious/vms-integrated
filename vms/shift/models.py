@@ -3,14 +3,6 @@ from django.db import models
 from job.models import Job
 
 class Shift(models.Model):
-    address = models.CharField(
-        max_length=75,
-        validators=[
-            RegexValidator(
-                r'^[(A-Z)|(a-z)|(0-9)|(\s)|(\-)]+$',
-            ),
-        ],
-    )
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()

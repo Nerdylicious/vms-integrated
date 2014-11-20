@@ -7,32 +7,6 @@
             {% csrf_token %}
             <fieldset>
                 <legend>Create Shift</legend>
-                {% if form.address.errors %}
-                    <div class="form-group has-error">
-                        <label class="col-md-2 control-label">
-                            Address
-                        </label>
-                        <div class="col-md-8">
-                            <input class="textinput textInput form-control" type="text" placeholder="Address" name="address" value="{{ form.address.value }}">
-                            <p class="help-block">
-                                <strong>
-                                    {% for error in form.address.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </strong>
-                            </p>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">
-                            Address
-                        </label>
-                        <div class="col-md-8">
-                            <input class="textinput textInput form-control" type="text" placeholder="Address" name="address" value="{% if form.address.value %}{{ form.address.value }}{% endif %}">
-                        </div>
-                    </div>
-                {% endif %}
                 {% if form.date.errors %}
                     <div class="form-group has-error">
                         <label class="col-md-2 control-label">Date</label>
