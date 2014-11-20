@@ -52,3 +52,8 @@ def edit(request, event_id):
 def list(request):
     event_list = get_events_ordered_by_name()
     return render(request, 'event/list.html', {'event_list' : event_list})
+
+@login_required
+def list_sign_up(request):
+    event_list = get_events_ordered_by_name()
+    return render(request, 'event/list_sign_up.html', {'event_list' : event_list})
