@@ -2,12 +2,12 @@
 
 {% block content %}
     <div class="spacer"></div>
+    <ul class="breadcrumb">
+        <li><a href="{% url 'event:list_sign_up' %}">Events</a></li>
+        <li><a href="{% url 'job:list_sign_up' job.event.id %}">{{ job.event.name }} Jobs</a></li>
+        <li class="active">{{ job.name }} Shifts</li>
+    </ul>
     {% if shift_list %}
-        <ul class="breadcrumb">
-            <li><a href="{% url 'event:list_sign_up' %}">Events</a></li>
-            <li><a href="{% url 'job:list_sign_up' job.event.id %}">{{ job.event.name }} Jobs</a></li>
-            <li class="active">{{ job.name }} Shifts</li>
-        </ul>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -32,7 +32,7 @@
         </table>
     {% else %}
         <div class="alert alert-info">
-            There are currently no shift for this job.
+            There are currently no shifts for the {{ job.name }} job.
         </div>
     {% endif %}
 {% endblock %}
