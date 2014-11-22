@@ -23,7 +23,7 @@
                         <td>{{ job.start_date }}</td>
                         <td>{{ job.end_date }}</td>
                         <td>
-                            <a href="" class="btn btn-success btn-sm">View Shifts</a>
+                            <a href="{% url 'shift:list_shifts_sign_up' job.id %}" class="btn btn-success btn-sm">View Shifts</a>
                         </td>
                     </tr>
                 {% endfor %}

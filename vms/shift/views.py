@@ -74,3 +74,7 @@ def list_shifts(request, job_id):
             raise Http404
     else:
         raise Http404
+
+@login_required
+def list_shifts_sign_up(request, job_id):
+    return HttpResponse('list shifts')
