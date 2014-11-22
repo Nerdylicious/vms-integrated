@@ -15,6 +15,10 @@ def delete_job(job_id):
 
     return result
 
+def get_jobs_by_event_id(e_id):
+    job_list = Job.objects.filter(event_id=e_id)
+    return job_list
+
 def get_job_by_id(job_id):
 
     is_valid = True

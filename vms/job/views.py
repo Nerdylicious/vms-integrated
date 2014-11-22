@@ -83,4 +83,10 @@ def list(request):
 
 @login_required
 def list_sign_up(request, event_id):
-    return HttpResponse('sign up')
+
+    event = get_event_by_id(event_id)
+    if event:
+        job_list = get_jobs_by_event_id(event_id);
+        return render(request, 'job/list_sign_up.html', {'event' : event, 'job_list' : job_list});
+    else:
+        raise Http404
