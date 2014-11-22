@@ -1,0 +1,20 @@
+{% extends "vms/base.html" %}
+
+{% block content %}
+    <div class="spacer"></div>
+    <form class="form-horizontal" action="" method="post">
+        {% csrf_token %}
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Shift Sign Up Confirmation</h3>
+            </div>
+            <div class="panel-body">
+                Are you sure that you want to sign up for this shift?
+                <br>
+                <br>
+                <button class="btn btn-default" type="submit">Yes, Sign Up for this Shift</button>
+                <a href="" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

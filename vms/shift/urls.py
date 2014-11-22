@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^list_jobs/$', views.list_jobs, name='list_jobs'),
     url(r'^list_shifts/(?P<job_id>\d+)$', views.list_shifts, name='list_shifts'),
     url(r'^list_shifts_sign_up/(?P<job_id>\d+)$', views.list_shifts_sign_up, name='list_shifts_sign_up'),
+    url(r'^sign_up/(?P<shift_id>\d+)$', views.sign_up, name='sign_up'),
 )

@@ -14,7 +14,7 @@
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
-                    <th>Register</th>
+                    <th>Sign Up</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +24,7 @@
                         <td>{{ shift.start_time }}</td>
                         <td>{{ shift.end_time }}</td>
                         <td>
-                            <a href="" class="btn btn-success btn-sm">Register</a>
+                            <a href="{% url 'shift:sign_up' shift.id %}" class="btn btn-success btn-sm">Sign Up</a>
                         </td>
                     </tr>
                 {% endfor %}
