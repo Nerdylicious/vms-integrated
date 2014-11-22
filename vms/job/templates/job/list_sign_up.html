@@ -4,7 +4,7 @@
     <div class="spacer"></div>
     {% if job_list %}
         <ul class="breadcrumb">
-            <li><a href="">Events</a></li>
+            <li><a href="{% url 'event:list_sign_up' %}">Events</a></li>
             <li class="active">{{ event.name }} Jobs</li>
         </ul>
         <table class="table table-striped table-hover">
@@ -13,7 +13,7 @@
                     <th>Job Name</th>
                     <th>Start Date</th>
                     <th>End Date</th>
-                    <th>View Jobs</th>
+                    <th>View Shifts</th>
                 </tr>
             </thead>
             <tbody>
