@@ -32,20 +32,26 @@ def create(request):
 @login_required
 def delete(request, job_id):
     
-    if request.method == 'POST':
-        result = delete_job(job_id)
-        if result:
-            return HttpResponseRedirect(reverse('job:list'))
-        else:
-            return render(request, 'job/delete_error.html', {'job_id' : job_id})
-    return render(request, 'job/delete.html', {'job_id' : job_id})
+    if job_id:
+        if request.method == 'POST':
+            result = delete_job(job_id)
+            if result:
+                return HttpResponseRedirect(reverse('job:list'))
+            else:
+                return render(request, 'job/delete_error.html', {'job_id' : job_id})
+        return render(request, 'job/delete.html', {'job_id' : job_id})
+    else:
+        raise Http404
 
 @login_required
 def details(request, job_id):
 
-    job = get_job_by_id(job_id)
-    if job:
-        return render(request, 'job/details.html', {'job' : job})
+    if job_id:
+        job = get_job_by_id(job_id)
+        if job:
+            return render(request, 'job/details.html', {'job' : job})
+        else:
+            raise Http404
     else:
         raise Http404
 
@@ -84,9 +90,12 @@ def list(request):
 @login_required
 def list_sign_up(request, event_id):
 
-    event = get_event_by_id(event_id)
-    if event:
-        job_list = get_jobs_by_event_id(event_id);
-        return render(request, 'job/list_sign_up.html', {'event' : event, 'job_list' : job_list});
+    if event_id:
+        event = get_event_by_id(event_id)
+        if event:
+            job_list = get_jobs_by_event_id(event_id);
+            return render(request, 'job/list_sign_up.html', {'event' : event, 'job_list' : job_list});
+        else:
+            raise Http404
     else:
         raise Http404

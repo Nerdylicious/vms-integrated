@@ -31,6 +31,10 @@ def get_shift_by_id(shift_id):
 
     return result
 
+def get_shifts_by_job_id(j_id):
+    shift_list = Shift.objects.filter(job_id=j_id)
+    return shift_list
+
 def get_shifts_ordered_by_date(j_id):
     shift_list = Shift.objects.filter(job_id=j_id).order_by('date')
     return shift_list

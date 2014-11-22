@@ -77,4 +77,12 @@ def list_shifts(request, job_id):
 
 @login_required
 def list_shifts_sign_up(request, job_id):
-    return HttpResponse('list shifts')
+    if job_id:
+        job = get_job_by_id(job_id)
+        if job:
+            shift_list = get_shifts_by_job_id(job_id) 
+            return render(request, 'shift/list_shifts_sign_up.html', {'shift_list' : shift_list, 'job' : job})
+        else:
+            raise Http404
+    else:
+        raise Http404
