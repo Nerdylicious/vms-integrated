@@ -89,4 +89,11 @@ def list_shifts_sign_up(request, job_id):
 
 @login_required
 def sign_up(request, shift_id):
-    return render(request, 'shift/sign_up.html')
+    if shift_id:
+        shift = get_shift_by_id(shift_id)
+        if shift:
+            return render(request, 'shift/sign_up.html', {'shift' : shift})
+        else:
+            raise Http404
+    else:
+        raise Http404

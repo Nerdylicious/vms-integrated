@@ -9,7 +9,15 @@
                 <h3 class="panel-title">Shift Sign Up Confirmation</h3>
             </div>
             <div class="panel-body">
+                <br>
                 Are you sure that you want to sign up for this shift?
+                <br>
+                <br>
+                <label><h4><span class="label label-default">Date</span></h4></label>&nbsp&nbsp&nbsp{{ shift.date }}
+                <br>
+                <label><h4><span class="label label-default">Start Time</span></h4></label>&nbsp&nbsp&nbsp{{ shift.start_time }}
+                <br>
+                <label><h4><span class="label label-default">End Time</span></h4></label>&nbsp&nbsp&nbsp{{ shift.end_time }}
                 <br>
                 <br>
                 <button class="btn btn-default" type="submit">Yes, Sign Up for this Shift</button>
