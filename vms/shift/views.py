@@ -117,3 +117,19 @@ def sign_up(request, shift_id):
             raise Http404
     else:
         raise Http404
+        
+@login_required
+def view_volunteer_shifts(request, volunteer_id):
+    if volunteer_id:
+        volunteer = get_volunteer_by_id(volunteer_id)
+        if volunteer:
+            user = request.user
+            if int(user.volunteer.id) == int(volunteer_id):
+                shift_list = get_shifts_signed_up_for(volunteer_id)
+                return render(request, 'shift/volunteer_shifts.html', {'shift_list' : shift_list, 'volunteer_id' : volunteer_id,})
+            else:
+                return HttpResponse(status=403)
+        else:
+            raise Http404
+    else:
+        raise Http404

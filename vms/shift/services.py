@@ -38,6 +38,13 @@ def get_shifts_by_job_id(j_id):
 def get_shifts_ordered_by_date(j_id):
     shift_list = Shift.objects.filter(job_id=j_id).order_by('date')
     return shift_list
+
+def get_shifts_signed_up_for(v_id):
+
+     shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id)
+     shift_signed_up_list.order_by('job__job_title')
+
+     return shift_signed_up_list
     
 def get_volunteer_shift_by_id(v_id, s_id):
     

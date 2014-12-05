@@ -33,6 +33,7 @@
                             <ul class="dropdown-menu">
                                 {% if user.volunteer %} 
                                     <li><a href="{% url 'volunteer:profile' user.volunteer.id %}">Profile</a></li>
+                                    <li><a href="{% url 'shift:view_volunteer_shifts' user.volunteer.id %}">My Shifts</a></li>
                                 {% endif %}
                                 <li><a href="{% url 'authentication:logout_process' %}">Log Out</a></li>
                             </ul>
