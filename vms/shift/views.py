@@ -92,7 +92,27 @@ def sign_up(request, shift_id):
     if shift_id:
         shift = get_shift_by_id(shift_id)
         if shift:
-            return render(request, 'shift/sign_up.html', {'shift' : shift})
+            if request.method == 'POST':
+                #retrieve the logged in user.id and from this retrieve the corresponding volunteer.id
+                user = request.user
+                if user.is_authenticated():
+                    volunteer_id = user.volunteer.id
+                    try:
+                        register(volunteer_id, shift_id)            
+                        return HttpResponse('registered')
+                    except ObjectDoesNotExist:
+                        raise Http404
+                    except Exception as e:
+                        if str(e) == 'No slots remaining':
+                            return HttpResponse('No slots remaining')
+                        if str(e) == 'Is already signed up':
+                            return HttpResponse('Signed up for this shift already')
+                        return HttpResponse('An error has occurred')
+                else:
+                    #return an Http 403 Forbidden code
+                    return HttpResponse(status=403)
+            else:
+                return render(request, 'shift/sign_up.html', {'shift' : shift})
         else:
             raise Http404
     else:
