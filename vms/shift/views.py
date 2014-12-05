@@ -99,7 +99,7 @@ def sign_up(request, shift_id):
                     volunteer_id = user.volunteer.id
                     try:
                         register(volunteer_id, shift_id)            
-                        return HttpResponse('registered')
+                        return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
                     except ObjectDoesNotExist:
                         raise Http404
                     except Exception as e:
