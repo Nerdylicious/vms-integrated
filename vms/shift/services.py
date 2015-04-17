@@ -45,6 +45,15 @@ def get_shifts_signed_up_for(v_id):
      shift_signed_up_list.order_by('job__job_title')
 
      return shift_signed_up_list
+
+def get_shift_slots_remaining(s_id):
+
+    shift = get_shift_by_id(s_id)
+    num_total_slots = shift.max_volunteers
+    num_slots_taken = VolunteerShift.objects.filter(shift_id=s_id).count()
+    num_slots_remaining = num_total_slots - num_slots_taken
+
+    return num_slots_remaining
     
 def get_volunteer_shift_by_id(v_id, s_id):
     
@@ -73,22 +82,29 @@ def is_signed_up(v_id, s_id):
     
 def register(v_id, s_id):
 
+    ERROR_CODE_ALREADY_SIGNED_UP = "ERROR_CODE_ALREADY_SIGNED_UP"
+    ERROR_CODE_NO_SLOTS_REMAINING = "ERROR_CODE_NO_SLOTS_REMAINING"
+
     #a volunteer must not be allowed to register for a shift that they are already registered for
     signed_up = is_signed_up(v_id, s_id)
 
     if not signed_up:
+
         volunteer_obj = get_volunteer_by_id(v_id)
         shift_obj = get_shift_by_id(s_id) 
 
         if volunteer_obj and shift_obj:
-            #if has_slots_remaining(shift_obj):
-            registration_obj = VolunteerShift(volunteer=volunteer_obj, shift=shift_obj)
-            registration_obj.save()
 
-                #decrement_slots_remaining(shift_obj)
-            #else:
-                #raise Exception('No slots remaining')
+            num_slots_remaining = get_shift_slots_remaining(s_id)
+
+            if num_slots_remaining > 0:
+
+                registration_obj = VolunteerShift(volunteer=volunteer_obj, shift=shift_obj)
+                registration_obj.save()
+
+            else:
+                raise Exception(ERROR_CODE_NO_SLOTS_REMAINING)
         else:
             raise ObjectDoesNotExist
     else:
-        raise Exception('Is already signed up')
+        raise Exception(ERROR_CODE_ALREADY_SIGNED_UP)

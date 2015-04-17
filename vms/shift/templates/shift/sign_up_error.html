@@ -1,0 +1,18 @@
+{% extends "vms/base.html" %}
+
+{% block content %}
+    <div class="spacer"></div>
+    <div class="alert alert-danger">
+        <h4>Error</h4>
+        <br>
+        {% if error_code == "ERROR_CODE_ALREADY_SIGNED_UP" %}
+            You have already signed up for this shift. Please sign up for a different shift.
+        {% elif error_code == "ERROR_CODE_NO_SLOTS_REMAINING" %}
+            There are not slots remaining for this shift. Please sign up for a different shift.
+        {% else %}
+        {% endif %}
+        <br>
+        <br>
+        <a href="" class="btn btn-default">Return to Previous Page</a>
+    </div>
+{% endblock %}

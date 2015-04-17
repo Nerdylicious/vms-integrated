@@ -103,11 +103,8 @@ def sign_up(request, shift_id):
                     except ObjectDoesNotExist:
                         raise Http404
                     except Exception as e:
-                        if str(e) == 'No slots remaining':
-                            return HttpResponse('No slots remaining')
-                        if str(e) == 'Is already signed up':
-                            return HttpResponse('Signed up for this shift already')
-                        return HttpResponse('An error has occurred')
+                        error_code = str(e)
+                        return render(request, 'shift/sign_up_error.html', {'error_code' : error_code})
                 else:
                     #return an Http 403 Forbidden code
                     return HttpResponse(status=403)
