@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,9 +10,9 @@
     <title>Volunteer Management System</title>
     <!-- Bootstrap core CSS -->
     <!--<link href="../../static/vms/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">-->
-    <link href="../../static/vms/bootstrap-lumen-theme/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "vms/bootstrap-lumen-theme/css/bootstrap.min.css" %}" rel="stylesheet">
     <!-- Custom styling taken from Systers Portal -->
-    <link href="../../static/vms/css/style.css" rel="stylesheet">
+    <link href="{% static "vms/css/style.css" %}" rel="stylesheet">
   </head>
   <body>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -50,7 +51,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../static/vms/jquery/jquery-1.11.1.min.js"></script>
-    <script src="../../static/vms/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+    <script src="{% static "vms/jquery/jquery-1.11.1.min.js" %}"></script>
+    <script src="{% static "vms/bootstrap-3.2.0-dist/js/bootstrap.min.js" %}"></script>
   </body>
 </html>

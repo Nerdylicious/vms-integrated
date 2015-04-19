@@ -3,6 +3,7 @@ from shift import views
 
 urlpatterns = patterns('',
     url(r'^create/(?P<job_id>\d+)$', views.create, name='create'),
+    url(r'^cancel/(?P<shift_id>\d+)/(?P<volunteer_id>\d+)$', views.cancel, name='cancel'),
     url(r'^delete/(?P<shift_id>\d+)$', views.delete, name='delete'),
     url(r'^edit/(?P<shift_id>\d+)$', views.edit, name='edit'),
     url(r'^list_jobs/$', views.list_jobs, name='list_jobs'),

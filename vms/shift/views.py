@@ -8,6 +8,10 @@ from shift.models import Shift
 from shift.services import *
 
 @login_required
+def cancel(request, shift_id, volunteer_id):
+    return render(request, 'shift/cancel_shift.html')
+
+@login_required
 def create(request, job_id):
     if job_id:
         if request.method == 'POST':

@@ -27,7 +27,7 @@
                             <a href="" class="btn btn-success btn-sm">Add Hours</a>
                         </td>
                         <td>
-                            <a href="" class="btn btn-danger btn-sm">Cancel Shift</a>
+                            <a href="{% url 'shift:cancel' shift.id user.volunteer.id %}" class="btn btn-danger btn-sm">Cancel Shift</a>
                         </td>
                     </tr>
                 {% endfor %}
