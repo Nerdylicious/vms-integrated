@@ -99,19 +99,13 @@ def register(v_id, s_id):
     signed_up = is_signed_up(v_id, s_id)
 
     if not signed_up:
-
         volunteer_obj = get_volunteer_by_id(v_id)
         shift_obj = get_shift_by_id(s_id) 
-
         if volunteer_obj and shift_obj:
-
             num_slots_remaining = get_shift_slots_remaining(s_id)
-
             if num_slots_remaining > 0:
-
                 registration_obj = VolunteerShift(volunteer=volunteer_obj, shift=shift_obj)
                 registration_obj.save()
-
             else:
                 result = ERROR_CODE_NO_SLOTS_REMAINING
         else:
