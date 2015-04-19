@@ -52,6 +52,17 @@ def get_shift_slots_remaining(s_id):
     num_slots_remaining = num_total_slots - num_slots_taken
 
     return num_slots_remaining
+
+def get_shifts_with_open_slots(j_id):
+
+    shift_list_by_date = get_shifts_ordered_by_date(j_id)
+    shift_list = []
+
+    for shift in shift_list_by_date:
+        if get_shift_slots_remaining(shift.id) > 0:
+            shift_list.append(shift)
+
+    return shift_list             
     
 def get_volunteer_shift_by_id(v_id, s_id):
     
