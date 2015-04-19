@@ -13,6 +13,7 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Add Hours</th>
+                    <th>Cancel Shift</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,9 @@
                         <td>{{ shift.end_time }}</td>
                         <td>
                             <a href="" class="btn btn-success btn-sm">Add Hours</a>
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-danger btn-sm">Cancel Shift</a>
                         </td>
                     </tr>
                 {% endfor %}

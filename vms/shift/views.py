@@ -80,7 +80,7 @@ def list_shifts_sign_up(request, job_id):
     if job_id:
         job = get_job_by_id(job_id)
         if job:
-            shift_list = get_shifts_by_job_id(job_id) 
+            shift_list = get_shifts_ordered_by_date(job_id)
             return render(request, 'shift/list_shifts_sign_up.html', {'shift_list' : shift_list, 'job' : job})
         else:
             raise Http404
