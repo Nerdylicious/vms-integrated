@@ -41,9 +41,7 @@ def get_shifts_ordered_by_date(j_id):
 
 def get_shifts_signed_up_for(v_id):
 
-     shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id)
-     shift_signed_up_list.order_by('job__job_title')
-
+     shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id).order_by('date')
      return shift_signed_up_list
 
 def get_shift_slots_remaining(s_id):
