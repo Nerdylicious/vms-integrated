@@ -98,13 +98,13 @@ def sign_up(request, shift_id):
                 if user.is_authenticated():
                     volunteer_id = user.volunteer.id
                     try:
-                        register(volunteer_id, shift_id)            
-                        return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                        result = register(volunteer_id, shift_id)            
+                        if result == "IS_VALID":
+                            return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                        else:
+                            return render(request, 'shift/sign_up_error.html', {'error_code' : result})
                     except ObjectDoesNotExist:
                         raise Http404
-                    except Exception as e:
-                        error_code = str(e)
-                        return render(request, 'shift/sign_up_error.html', {'error_code' : error_code})
                 else:
                     #return an Http 403 Forbidden code
                     return HttpResponse(status=403)

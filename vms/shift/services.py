@@ -82,6 +82,7 @@ def is_signed_up(v_id, s_id):
     
 def register(v_id, s_id):
 
+    result = "IS_VALID"
     ERROR_CODE_ALREADY_SIGNED_UP = "ERROR_CODE_ALREADY_SIGNED_UP"
     ERROR_CODE_NO_SLOTS_REMAINING = "ERROR_CODE_NO_SLOTS_REMAINING"
 
@@ -103,8 +104,10 @@ def register(v_id, s_id):
                 registration_obj.save()
 
             else:
-                raise Exception(ERROR_CODE_NO_SLOTS_REMAINING)
+                result = ERROR_CODE_NO_SLOTS_REMAINING
         else:
             raise ObjectDoesNotExist
     else:
-        raise Exception(ERROR_CODE_ALREADY_SIGNED_UP)
+        result = ERROR_CODE_ALREADY_SIGNED_UP
+
+    return result
