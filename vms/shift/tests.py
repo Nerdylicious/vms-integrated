@@ -204,21 +204,18 @@ class ShiftMethodTests(TestCase):
             start_time = "9:00",
             end_time = "3:00",
             max_volunteers = 1,
-            slots_remaining = 1,
             job = j1)
 
         s2 = Shift(date = "2012-6-25",
             start_time = "10:00",
             end_time = "4:00",
             max_volunteers = 2,
-            slots_remaining = 2,
             job = j1)
 
         s3 = Shift(date = "2012-12-9",
             start_time = "12:00",
             end_time = "6:00",
             max_volunteers = 4,
-            slots_remaining = 4,
             job = j1)
 
         s1.save()
@@ -238,3 +235,76 @@ class ShiftMethodTests(TestCase):
         self.assertEqual(shift_list[0].date, s1.date)
         self.assertEqual(shift_list[1].date, s2.date)
         self.assertEqual(shift_list[2].date, s3.date)
+
+    def test_get_shifts_signed_up_for(self):
+
+        u1 = User.objects.create_user('Yoshi')     
+
+        v1 = Volunteer(first_name = "Yoshi",
+            last_name = "Turtle",
+            address = "Mario Land",
+            city = "Nintendo Land",
+            state = "Nintendo State",
+            country = "Nintendo Nation",
+            phone_number = "2374983247",
+            email = "yoshi@nintendo.com",
+            user = u1)
+
+        v1.save()
+
+        e1 = Event(name = "Open Source Event",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23")
+
+        e1.save()
+
+        j1 = Job(name = "Software Developer",
+            start_date = "2012-10-22",
+            end_date = "2012-10-23",
+            description = "A software job",
+            event = e1)
+
+        j2 = Job(name = "Systems Administrator",
+            start_date = "2012-9-1",
+            end_date = "2012-10-26",
+            description = "A systems administrator job",
+            event = e1)
+
+        j1.save()
+        j2.save()
+
+        s1 = Shift(date = "2012-10-23",
+            start_time = "9:00",
+            end_time = "3:00",
+            max_volunteers = 1,
+            job = j1)
+
+        s2 = Shift(date = "2012-10-23",
+            start_time = "10:00",
+            end_time = "4:00",
+            max_volunteers = 2,
+            job = j1)
+
+        s3 = Shift(date = "2012-10-23",
+            start_time = "12:00",
+            end_time = "6:00",
+            max_volunteers = 4,
+            job = j2)
+
+        s1.save()
+        s2.save()
+        s3.save()
+
+        #sign up
+        register(v1.id, s1.id)
+        register(v1.id, s2.id)
+        register(v1.id, s3.id)
+
+        #test typical case
+        shift_list = get_shifts_signed_up_for(v1.id)
+        self.assertIsNotNone(shift_list)
+        self.assertNotEqual(shift_list, False)
+        self.assertEqual(len(shift_list), 3)
+        self.assertIn(s1, shift_list)
+        self.assertIn(s2, shift_list)
+        self.assertIn(s3, shift_list)
