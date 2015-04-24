@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 from shift import views
 
 urlpatterns = patterns('',
+    url(r'^add_hours/(?P<shift_id>\d+)/(?P<volunteer_id>\d+)$', views.add_hours, name='add_hours'),
     url(r'^create/(?P<job_id>\d+)$', views.create, name='create'),
     url(r'^cancel/(?P<shift_id>\d+)/(?P<volunteer_id>\d+)$', views.cancel, name='cancel'),
     url(r'^delete/(?P<shift_id>\d+)$', views.delete, name='delete'),

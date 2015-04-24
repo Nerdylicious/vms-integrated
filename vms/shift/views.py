@@ -8,6 +8,10 @@ from shift.models import Shift
 from shift.services import *
 
 @login_required
+def add_hours(request, shift_id, volunteer_id):
+    return render(request, 'shift/add_hours.html')
+
+@login_required
 def cancel(request, shift_id, volunteer_id):
     if shift_id and volunteer_id:
         user = request.user

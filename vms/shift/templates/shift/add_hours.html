@@ -1,0 +1,13 @@
+{% extends "vms/base.html" %}
+
+{% block content %}
+    <div class="spacer"></div>
+    <div class="well">
+        <form class="form-horizontal" action="" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Add Shift Hours</legend>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
