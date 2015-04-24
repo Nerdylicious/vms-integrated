@@ -9,7 +9,21 @@ from shift.services import *
 
 @login_required
 def cancel(request, shift_id, volunteer_id):
-    return render(request, 'shift/cancel_shift.html')
+    if shift_id and volunteer_id:
+        user = request.user
+        if int(user.volunteer.id) == int(volunteer_id):
+            if request.method == 'POST':
+                try:
+                    cancel_shift_registration(volunteer_id, shift_id)
+                    return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                except:
+                    raise Http404
+            else:
+                return render(request, 'shift/cancel_shift.html')
+        else:
+            return HttpResponse(status=403)
+    else:
+        raise Http404
 
 @login_required
 def create(request, job_id):

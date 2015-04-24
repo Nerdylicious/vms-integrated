@@ -4,6 +4,20 @@ from job.models import Job
 from shift.models import Shift, VolunteerShift
 from volunteer.services import *
 
+def cancel_shift_registration(v_id, s_id):
+
+    if s_id and v_id:
+        try:
+            shift = Shift.objects.get(pk=s_id)
+            obj = VolunteerShift.objects.get(volunteer_id=v_id, shift_id=s_id)
+        except ObjectDoesNotExist:
+            raise ObjectDoesNotExist
+        else:
+            #remove volunteer from being signed up for this shift
+            obj.delete()
+    else:
+        raise TypeError
+
 def delete_shift(shift_id):
 
     result = True
