@@ -120,3 +120,66 @@ class ShiftMethodTests(TestCase):
         #cancel_shift_registration(v2.id, s1.id) #why is this throwing ObjectDoesNotExist?
         cancel_shift_registration(v2.id, s2.id)
         cancel_shift_registration(v2.id, s3.id)
+
+    def test_get_shift_by_id(self):
+
+        e1 = Event(name = "Open Source Event",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23")
+
+        e1.save()
+
+        j1 = Job(name = "Software Developer",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23",
+                description = "A software job",
+                event = e1)
+
+        j1.save()
+
+        s1 = Shift(date = "2012-10-23",
+                start_time = "9:00",
+                end_time = "3:00",
+                max_volunteers = 1,
+                job = j1)
+
+        s2 = Shift(date = "2012-10-23",
+                start_time = "10:00",
+                end_time = "4:00",
+                max_volunteers = 2,
+                job = j1)
+
+        s3 = Shift(date = "2012-10-23",
+                start_time = "12:00",
+                end_time = "6:00",
+                max_volunteers = 4,
+                job = j1)
+
+        s1.save()
+        s2.save()
+        s3.save()
+
+#test typical cases
+        self.assertIsNotNone(get_shift_by_id(s1.id))
+        self.assertIsNotNone(get_shift_by_id(s2.id))
+        self.assertIsNotNone(get_shift_by_id(s3.id))
+
+        self.assertEqual(get_shift_by_id(s1.id), s1)
+        self.assertEqual(get_shift_by_id(s2.id), s2)
+        self.assertEqual(get_shift_by_id(s3.id), s3)
+
+#test non-existant cases
+        self.assertIsNone(get_shift_by_id(100))
+        self.assertIsNone(get_shift_by_id(200))
+        self.assertIsNone(get_shift_by_id(300))
+        self.assertIsNone(get_shift_by_id(400))
+
+        self.assertNotEqual(get_shift_by_id(100), s1)
+        self.assertNotEqual(get_shift_by_id(100), s2)
+        self.assertNotEqual(get_shift_by_id(100), s3)
+        self.assertNotEqual(get_shift_by_id(200), s1)
+        self.assertNotEqual(get_shift_by_id(200), s2)
+        self.assertNotEqual(get_shift_by_id(200), s3)
+        self.assertNotEqual(get_shift_by_id(300), s1)
+        self.assertNotEqual(get_shift_by_id(300), s2)
+        self.assertNotEqual(get_shift_by_id(300), s3)
