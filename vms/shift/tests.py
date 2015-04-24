@@ -494,3 +494,107 @@ class ShiftMethodTests(TestCase):
         self.assertFalse(is_signed_up(v2.id, s1.id))
         self.assertTrue(is_signed_up(v2.id, s2.id))
         self.assertTrue(is_signed_up(v2.id, s3.id))
+
+    def test_register(self):
+
+        RESULT_IS_VALID = "IS_VALID"
+        ERROR_CODE_ALREADY_SIGNED_UP = "ERROR_CODE_ALREADY_SIGNED_UP"
+        ERROR_CODE_NO_SLOTS_REMAINING = "ERROR_CODE_NO_SLOTS_REMAINING"
+
+        u1 = User.objects.create_user('Yoshi')     
+        u2 = User.objects.create_user('John')     
+
+        v1 = Volunteer(first_name = "Yoshi",
+                    last_name = "Turtle",
+                    address = "Mario Land",
+                    city = "Nintendo Land",
+                    state = "Nintendo State",
+                    country = "Nintendo Nation",
+                    phone_number = "2374983247",
+                    email = "yoshi@nintendo.com",
+                    user = u1)
+
+        v2 = Volunteer(first_name = "John",
+                    last_name = "Doe",
+                    address = "7 Alpine Street",
+                    city = "Maplegrove",
+                    state = "Wyoming",
+                    country = "USA",
+                    phone_number = "23454545",
+                    email = "john@test.com",
+                    user = u2)
+
+        v1.save()
+        v2.save()
+
+        e1 = Event(name = "Open Source Event",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23")
+
+        e1.save()
+
+        j1 = Job(name = "Software Developer",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23",
+                description = "A software job",
+                event = e1)
+
+        j2 = Job(name = "Systems Administrator",
+                start_date = "2012-9-1",
+                end_date = "2012-10-26",
+                description = "A systems administrator job",
+                event = e1)
+
+        j1.save()
+        j2.save()
+
+        s1 = Shift(date = "2012-10-23",
+                start_time = "9:00",
+                end_time = "3:00",
+                max_volunteers = 1,
+                job = j1)
+
+        s2 = Shift(date = "2012-10-23",
+                start_time = "10:00",
+                end_time = "4:00",
+                max_volunteers = 2,
+                job = j1)
+
+        s3 = Shift(date = "2012-10-23",
+                start_time = "12:00",
+                end_time = "6:00",
+                max_volunteers = 4,
+                job = j2)
+
+        s1.save()
+        s2.save()
+        s3.save()
+
+        #test typical cases
+        register(v1.id, s1.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id))
+
+        register(v1.id, s2.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s2.id))
+
+        register(v1.id, s3.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s3.id))
+
+        #test cases where volunteer tries to sign up for a shift they are already signed up for
+        self.assertEqual(register(v1.id, s1.id), ERROR_CODE_ALREADY_SIGNED_UP)
+        self.assertEqual(register(v1.id, s2.id), ERROR_CODE_ALREADY_SIGNED_UP)
+        self.assertEqual(register(v1.id, s3.id), ERROR_CODE_ALREADY_SIGNED_UP)
+
+        #test case where more than one volunteer signs up for the same shift
+        #v2 can't sign up for s1 because there are no slots remaining
+        self.assertEqual(register(v2.id, s1.id), ERROR_CODE_NO_SLOTS_REMAINING)
+
+        register(v2.id, s2.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v2.id, shift_id=s2.id))
+
+        register(v2.id, s3.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v2.id, shift_id=s3.id))
+
+        #test cases where a volunteer tries to sign up for a shift they are already signed up for
+        self.assertEqual(register(v2.id, s2.id), ERROR_CODE_ALREADY_SIGNED_UP)
+        self.assertEqual(register(v2.id, s3.id), ERROR_CODE_ALREADY_SIGNED_UP)
