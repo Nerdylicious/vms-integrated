@@ -51,6 +51,21 @@ def cancel(request, shift_id, volunteer_id):
         raise Http404
 
 @login_required
+def clear_hours(request, shift_id, volunteer_id):
+
+    if shift_id and volunteer_id:
+        if request.method == 'POST':
+            result = clear_shift_hours(volunteer_id, shift_id)
+            if result:
+                return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+            else:
+                raise Http404 
+        else:
+            return render(request, 'shift/clear_hours.html')
+    else:
+        raise Http404
+
+@login_required
 def create(request, job_id):
     if job_id:
         if request.method == 'POST':
@@ -75,13 +90,16 @@ def create(request, job_id):
 @login_required
 def delete(request, shift_id):
 
-    if request.method == 'POST':
-        result = delete_shift(shift_id)
-        if result:
-            return HttpResponseRedirect(reverse('shift:list_jobs'))
-        else:
-            return render(request, 'shift/delete_error.html')
-    return render(request, 'shift/delete.html', {'shift_id' : shift_id})
+    if shift_id:
+        if request.method == 'POST':
+            result = delete_shift(shift_id)
+            if result:
+                return HttpResponseRedirect(reverse('shift:list_jobs'))
+            else:
+                return render(request, 'shift/delete_error.html')
+        return render(request, 'shift/delete.html', {'shift_id' : shift_id})
+    else:
+        raise Http404
 
 @login_required
 def edit(request, shift_id):

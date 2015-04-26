@@ -14,6 +14,7 @@
                     <th>Scheduled End Time</th>
                     <th>Add Hours</th>
                     <th>Edit Hours</th>
+                    <th>Clear Hours</th>
                     <th>Cancel Shift</th>
                 </tr>
             </thead>
@@ -29,6 +30,9 @@
                         </td>
                         <td>
                             <a href="{% url 'shift:edit_hours' shift.id user.volunteer.id %}" class="btn btn-info btn-sm">Edit Hours</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'shift:clear_hours' shift.id user.volunteer.id %}" class="btn btn-default btn-sm">Clear Hours</a>
                         </td>
                         <td>
                             <a href="{% url 'shift:cancel' shift.id user.volunteer.id %}" class="btn btn-danger btn-sm">Cancel Shift</a>

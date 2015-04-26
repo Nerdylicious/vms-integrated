@@ -29,6 +29,20 @@ def cancel_shift_registration(v_id, s_id):
     else:
         raise TypeError
 
+def clear_shift_hours(v_id, s_id):
+
+    result = True
+    volunteer_shift = get_volunteer_shift_by_id(v_id, s_id)
+
+    if volunteer_shift:
+        volunteer_shift.start_time = None
+        volunteer_shift.end_time = None
+        volunteer_shift.save()
+    else:
+        result = False
+    
+    return result
+
 def delete_shift(shift_id):
 
     result = True
