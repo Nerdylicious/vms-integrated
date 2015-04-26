@@ -102,6 +102,14 @@ def edit(request, shift_id):
         return render(request, 'shift/edit.html', {'form' : form, 'shift' : shift})
 
 @login_required
+def edit_hours(request, shift_id, volunteer_id):
+
+    if shift_id and volunteer_id:
+        return render(request, 'shift/edit_hours.html')
+    else:
+        raise Http404
+
+@login_required
 def list_jobs(request):
     job_list = get_jobs_ordered_by_title()
     return render(request, 'shift/list_jobs.html', {'job_list' : job_list})
