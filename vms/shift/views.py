@@ -105,7 +105,29 @@ def edit(request, shift_id):
 def edit_hours(request, shift_id, volunteer_id):
 
     if shift_id and volunteer_id:
-        return render(request, 'shift/edit_hours.html')
+        volunteer_shift = get_volunteer_shift_by_id(volunteer_id, shift_id)
+        user = request.user
+        if int(user.volunteer.id) == int(volunteer_id):
+            if volunteer_shift:
+                if request.method == 'POST':
+                    form = HoursForm(request.POST)
+                    if form.is_valid():
+                        start_time = form.cleaned_data['start_time']
+                        end_time = form.cleaned_data['end_time']
+                        try:
+                            edit_shift_hours(volunteer_id, shift_id, start_time, end_time)
+                            return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                        except:
+                            raise Http404
+                    else:
+                        return render(request, 'shift/edit_hours.html', {'form' : form, 'shift_id' : shift_id, 'volunteer_id' : volunteer_id})
+                else:
+                    form = HoursForm(initial={'start_time' : volunteer_shift.start_time, 'end_time' : volunteer_shift.end_time})
+                    return render(request, 'shift/edit_hours.html', {'form' : form, 'shift_id' : shift_id, 'volunteer_id' : volunteer_id})
+            else:
+                raise Http404
+        else:
+            return HttpResponse(status=403)
     else:
         raise Http404
 

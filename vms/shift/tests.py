@@ -212,6 +212,96 @@ class ShiftMethodTests(TestCase):
         cancel_shift_registration(v2.id, s2.id)
         cancel_shift_registration(v2.id, s3.id)
 
+    def test_edit_shift_hours(self):
+
+        u1 = User.objects.create_user('Yoshi')     
+
+        v1 = Volunteer(first_name = "Yoshi",
+                    last_name = "Turtle",
+                    address = "Mario Land",
+                    city = "Nintendo Land",
+                    state = "Nintendo State",
+                    country = "Nintendo Nation",
+                    phone_number = "2374983247",
+                    email = "yoshi@nintendo.com",
+                    user = u1)
+
+        v1.save()
+
+        e1 = Event(name = "Open Source Event",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23")
+
+        e1.save()
+
+        j1 = Job(name = "Software Developer",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23",
+                description = "A software job",
+                event = e1)
+
+        j1.save()
+
+        s1 = Shift(date = "2012-10-23",
+                start_time = "1:00",
+                end_time = "12:00",
+                max_volunteers = 1,
+                job = j1)
+
+        s1.save()
+
+        register(v1.id, s1.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id))
+
+        start_time = datetime.time(hour=9, minute=0)
+        end_time = datetime.time(hour=10, minute=0)
+        add_shift_hours(v1.id, s1.id, start_time, end_time)
+
+        start_time = datetime.time(hour=10, minute=0)
+        end_time = datetime.time(hour=11, minute=0)
+        edit_shift_hours(v1.id, s1.id, start_time, end_time)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id)
+        self.assertIsNotNone(volunteer_shift.start_time)
+        self.assertIsNotNone(volunteer_shift.end_time)
+        self.assertEqual(volunteer_shift.start_time, start_time)
+        self.assertEqual(volunteer_shift.end_time, end_time)
+
+        start_time = datetime.time(hour=1, minute=0)
+        end_time = datetime.time(hour=4, minute=0)
+        edit_shift_hours(v1.id, s1.id, start_time, end_time)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id)
+        self.assertIsNotNone(volunteer_shift.start_time)
+        self.assertIsNotNone(volunteer_shift.end_time)
+        self.assertEqual(volunteer_shift.start_time, start_time)
+        self.assertEqual(volunteer_shift.end_time, end_time)
+
+        start_time = datetime.time(hour=4, minute=15)
+        end_time = datetime.time(hour=12, minute=35)
+        edit_shift_hours(v1.id, s1.id, start_time, end_time)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id)
+        self.assertIsNotNone(volunteer_shift.start_time)
+        self.assertIsNotNone(volunteer_shift.end_time)
+        self.assertEqual(volunteer_shift.start_time, start_time)
+        self.assertEqual(volunteer_shift.end_time, end_time)
+
+        start_time = datetime.time(hour=2, minute=5)
+        end_time = datetime.time(hour=4, minute=15)
+        edit_shift_hours(v1.id, s1.id, start_time, end_time)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id)
+        self.assertIsNotNone(volunteer_shift.start_time)
+        self.assertIsNotNone(volunteer_shift.end_time)
+        self.assertEqual(volunteer_shift.start_time, start_time)
+        self.assertEqual(volunteer_shift.end_time, end_time)
+
+        start_time = datetime.time(hour=5, minute=0)
+        end_time = datetime.time(hour=5, minute=30)
+        edit_shift_hours(v1.id, s1.id, start_time, end_time)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id)
+        self.assertIsNotNone(volunteer_shift.start_time)
+        self.assertIsNotNone(volunteer_shift.end_time)
+        self.assertEqual(volunteer_shift.start_time, start_time)
+        self.assertEqual(volunteer_shift.end_time, end_time)
+
     def test_get_shift_by_id(self):
 
         e1 = Event(name = "Open Source Event",

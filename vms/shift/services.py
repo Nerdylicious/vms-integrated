@@ -41,6 +41,17 @@ def delete_shift(shift_id):
 
     return result
 
+def edit_shift_hours(v_id, s_id, start_time, end_time):
+
+    volunteer_shift = get_volunteer_shift_by_id(v_id, s_id)
+
+    if volunteer_shift:
+        volunteer_shift.start_time = start_time
+        volunteer_shift.end_time = end_time
+        volunteer_shift.save()
+    else:
+        raise ObjectDoesNotExist
+
 def get_shift_by_id(shift_id):
 
     is_valid = True
