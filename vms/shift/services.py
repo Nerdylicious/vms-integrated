@@ -4,6 +4,17 @@ from job.models import Job
 from shift.models import Shift, VolunteerShift
 from volunteer.services import *
 
+def add_shift_hours(v_id, s_id, start_time, end_time):
+
+    volunteer_shift = get_volunteer_shift_by_id(v_id, s_id)
+
+    if volunteer_shift:
+        volunteer_shift.start_time = start_time
+        volunteer_shift.end_time = end_time
+        volunteer_shift.save()
+    else:
+        raise ObjectDoesNotExist
+
 def cancel_shift_registration(v_id, s_id):
 
     if s_id and v_id:

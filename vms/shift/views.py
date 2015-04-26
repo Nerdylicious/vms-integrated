@@ -3,13 +3,34 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from job.services import *
-from shift.forms import ShiftForm
+from shift.forms import HoursForm, ShiftForm
 from shift.models import Shift
 from shift.services import *
 
 @login_required
 def add_hours(request, shift_id, volunteer_id):
-    return render(request, 'shift/add_hours.html')
+    if shift_id and volunteer_id:
+        user = request.user
+        if int(user.volunteer.id) == int(volunteer_id):
+            if request.method == 'POST':
+                form = HoursForm(request.POST)
+                if form.is_valid():
+                    start_time = form.cleaned_data['start_time']
+                    end_time = form.cleaned_data['end_time']
+                    try:
+                        add_shift_hours(volunteer_id, shift_id, start_time, end_time)
+                        return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                    except:
+                        raise Http404
+                else:
+                    return render(request, 'shift/add_hours.html', {'form' : form, 'shift_id' : shift_id, 'volunteer_id' : volunteer_id,})
+            else:
+                form = HoursForm()
+                return render(request, 'shift/add_hours.html', {'form' : form, 'shift_id' : shift_id, 'volunteer_id' : volunteer_id,})
+        else:
+            return HttpResponse(status=403)
+    else:
+        raise Http404
 
 @login_required
 def cancel(request, shift_id, volunteer_id):
