@@ -19,7 +19,7 @@ def add_hours(request, shift_id, volunteer_id):
                     end_time = form.cleaned_data['end_time']
                     try:
                         add_shift_hours(volunteer_id, shift_id, start_time, end_time)
-                        return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                        return HttpResponseRedirect(reverse('shift:view_hours', args=(volunteer_id,)))
                     except:
                         raise Http404
                 else:
@@ -57,7 +57,7 @@ def clear_hours(request, shift_id, volunteer_id):
         if request.method == 'POST':
             result = clear_shift_hours(volunteer_id, shift_id)
             if result:
-                return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                return HttpResponseRedirect(reverse('shift:view_hours', args=(volunteer_id,)))
             else:
                 raise Http404 
         else:
@@ -134,7 +134,7 @@ def edit_hours(request, shift_id, volunteer_id):
                         end_time = form.cleaned_data['end_time']
                         try:
                             edit_shift_hours(volunteer_id, shift_id, start_time, end_time)
-                            return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                            return HttpResponseRedirect(reverse('shift:view_hours', args=(volunteer_id,)))
                         except:
                             raise Http404
                     else:
