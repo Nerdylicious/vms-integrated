@@ -417,7 +417,7 @@ class ShiftMethodTests(TestCase):
         self.assertEqual(shift_list[1].date, s2.date)
         self.assertEqual(shift_list[2].date, s3.date)
 
-    def test_get_shifts_signed_up_for(self):
+    def test_get_unlogged_shifts_by_volunteer_id(self):
 
         u1 = User.objects.create_user('Yoshi')     
 
@@ -482,7 +482,7 @@ class ShiftMethodTests(TestCase):
         register(v1.id, s3.id)
 
         #test typical case
-        shift_list = get_shifts_signed_up_for(v1.id)
+        shift_list = get_unlogged_shifts_by_volunteer_id(v1.id)
         self.assertIsNotNone(shift_list)
         self.assertNotEqual(shift_list, False)
         self.assertEqual(len(shift_list), 3)

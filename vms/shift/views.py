@@ -229,7 +229,7 @@ def view_volunteer_shifts(request, volunteer_id):
         if volunteer:
             user = request.user
             if int(user.volunteer.id) == int(volunteer_id):
-                shift_list = get_shifts_signed_up_for(volunteer_id)
+                shift_list = get_unlogged_shifts_by_volunteer_id(volunteer_id)
                 return render(request, 'shift/volunteer_shifts.html', {'shift_list' : shift_list, 'volunteer_id' : volunteer_id,})
             else:
                 return HttpResponse(status=403)

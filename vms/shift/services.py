@@ -89,11 +89,6 @@ def get_shifts_ordered_by_date(j_id):
     shift_list = Shift.objects.filter(job_id=j_id).order_by('date')
     return shift_list
 
-def get_shifts_signed_up_for(v_id):
-
-     shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id).order_by('date')
-     return shift_signed_up_list
-
 def get_shift_slots_remaining(s_id):
 
     shift = get_shift_by_id(s_id)
@@ -113,6 +108,19 @@ def get_shifts_with_open_slots(j_id):
             shift_list.append(shift)
 
     return shift_list             
+
+def get_unlogged_shifts_by_volunteer_id(v_id):
+
+    #get shifts that the volunteer signed up for
+    shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id)
+
+    #get shifts that have not been logged yet (in terms of logged start and end times)
+    shift_signed_up_list = shift_signed_up_list.filter(volunteershift__start_time__isnull=True, volunteershift__end_time__isnull=True)
+
+    #order the list by date in ascending order
+    shift_signed_up_list = shift_signed_up_list.order_by('date')
+
+    return shift_signed_up_list
     
 def get_volunteer_shift_by_id(v_id, s_id):
     
