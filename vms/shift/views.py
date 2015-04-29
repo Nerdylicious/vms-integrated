@@ -207,8 +207,20 @@ def sign_up(request, shift_id):
         raise Http404
 
 @login_required
-def view_volunteer_shift_hours(request, volunteer_id):
-    return render(request, 'shift/volunteer_shift_hours.html')
+def view_hours(request, volunteer_id):
+    if volunteer_id:
+        volunteer = get_volunteer_by_id(volunteer_id)
+        if volunteer:
+            user = request.user
+            if int(user.volunteer.id) == int(volunteer_id):
+                volunteer_shift_list = get_volunteer_shifts_with_hours(volunteer_id)
+                return render(request, 'shift/hours_list.html', {'volunteer_shift_list' : volunteer_shift_list,})
+            else:
+                return HttpResponse(status=403)
+        else:
+            raise Http404
+    else:
+        raise Http404
         
 @login_required
 def view_volunteer_shifts(request, volunteer_id):

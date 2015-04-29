@@ -128,6 +128,19 @@ def get_volunteer_shift_by_id(v_id, s_id):
         result = volunteer_shift
 
     return result
+
+def get_volunteer_shifts_with_hours(v_id):
+
+    #get shifts that the volunteer is signed up for
+    volunteer_shift_list = VolunteerShift.objects.filter(volunteer_id=v_id)
+
+    #get shifts that have logged hours only
+    volunteer_shift_list = volunteer_shift_list.filter(start_time__isnull=False, end_time__isnull=False)
+
+    #order by date, start_time and end_time in descending order
+    volunteer_shift_list = volunteer_shift_list.order_by('-shift__date', '-start_time', '-end_time')
+
+    return volunteer_shift_list
     
 def is_signed_up(v_id, s_id):
 
