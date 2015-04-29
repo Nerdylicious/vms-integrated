@@ -205,6 +205,10 @@ def sign_up(request, shift_id):
             raise Http404
     else:
         raise Http404
+
+@login_required
+def view_volunteer_shift_hours(request, volunteer_id):
+    return render(request, 'shift/volunteer_shift_hours.html')
         
 @login_required
 def view_volunteer_shifts(request, volunteer_id):
