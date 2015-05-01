@@ -3,6 +3,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from organization.services import *
 from volunteer.models import Volunteer
 
+def get_all_volunteers():
+    
+    volunteer_list = Volunteer.objects.all()
+    return volunteer_list
+
 def get_volunteer_by_id(volunteer_id):
 
     is_valid = True
