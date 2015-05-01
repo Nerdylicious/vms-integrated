@@ -181,6 +181,10 @@ def list_shifts_sign_up(request, job_id):
         raise Http404
 
 @login_required
+def manage_volunteer_shifts(request, volunteer_id):
+    return render(request, 'shift/manage_volunteer_shifts.html')
+
+@login_required
 def sign_up(request, shift_id):
     if shift_id:
         shift = get_shift_by_id(shift_id)
