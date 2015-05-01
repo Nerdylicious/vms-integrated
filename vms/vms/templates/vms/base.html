@@ -27,6 +27,7 @@
                 <ul class="nav navbar-nav navbar-right text-uppercase">
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'volunteer:search' %}">Volunteer Search</a></li>
+                        <li><a href="{% url 'shift:volunteer_search' %}">Manage Volunteer Shifts</a></li>
                         {% if user.volunteer %}
                             <li><a href="{% url 'shift:view_volunteer_shifts' user.volunteer.id %}">Upcoming Shifts</a></li>
                             <li><a href="{% url 'shift:view_hours' user.volunteer.id %}">Shift Hours</a></li>

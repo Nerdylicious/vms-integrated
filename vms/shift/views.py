@@ -6,6 +6,8 @@ from job.services import *
 from shift.forms import HoursForm, ShiftForm
 from shift.models import Shift
 from shift.services import *
+from volunteer.forms import SearchVolunteerForm
+from volunteer.services import search_volunteers
 
 @login_required
 def add_hours(request, shift_id, volunteer_id):
@@ -237,3 +239,23 @@ def view_volunteer_shifts(request, volunteer_id):
             raise Http404
     else:
         raise Http404
+
+@login_required
+def volunteer_search(request):
+    if request.method == 'POST':
+        form = SearchVolunteerForm(request.POST)
+        if form.is_valid():
+
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            country = form.cleaned_data['country']
+            organization = form.cleaned_data['organization']
+
+            search_result_list = search_volunteers(first_name, last_name, city, state, country, organization)
+            return render(request, 'shift/volunteer_search.html', {'form' : form, 'has_searched' : True, 'search_result_list' : search_result_list})
+    else:
+        form = SearchVolunteerForm()
+
+    return render(request, 'shift/volunteer_search.html', {'form' : form, 'has_searched' : False})
