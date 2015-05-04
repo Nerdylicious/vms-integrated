@@ -182,7 +182,16 @@ def list_shifts_sign_up(request, job_id):
 
 @login_required
 def manage_volunteer_shifts(request, volunteer_id):
-    return render(request, 'shift/manage_volunteer_shifts.html')
+    if volunteer_id:
+        volunteer = get_volunteer_by_id(volunteer_id)
+        if volunteer:
+            #show only shifts that have no hours logged yet (since it doesn't make sense be able to cancel shifts that have already been logged)
+            shift_list = get_unlogged_shifts_by_volunteer_id(volunteer_id)
+            return render(request, 'shift/manage_volunteer_shifts.html', {'shift_list' : shift_list})
+        else:
+            raise Http404
+    else:
+        raise Http404
 
 @login_required
 def sign_up(request, shift_id):
