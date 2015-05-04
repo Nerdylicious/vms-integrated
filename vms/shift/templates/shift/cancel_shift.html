@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="spacer"></div>
-    <form action="" method="post">
+    <form action="{% url 'shift:cancel' shift_id volunteer_id %}" method="post">
         {% csrf_token %}
         <div class="panel panel-danger">
             <div class="panel-heading">

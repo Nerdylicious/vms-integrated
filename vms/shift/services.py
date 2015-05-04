@@ -111,11 +111,12 @@ def get_shifts_with_open_slots(j_id):
 
 def get_unlogged_shifts_by_volunteer_id(v_id):
 
-    #get shifts that the volunteer signed up for
-    shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id)
+    #get shifts that the volunteer signed up for and that have not been logged yet (in terms of logged start and end times)
+    shift_signed_up_list = Shift.objects.filter(volunteershift__volunteer_id=v_id, volunteershift__start_time__isnull=True, volunteershift__end_time__isnull=True)
 
-    #get shifts that have not been logged yet (in terms of logged start and end times)
-    shift_signed_up_list = shift_signed_up_list.filter(volunteershift__start_time__isnull=True, volunteershift__end_time__isnull=True)
+    #this filtering is buggy when done this way, why? 
+    #it shows the same shift multiple times if multiple volunteers are signed up for the same shift)
+    #shift_signed_up_list = shift_signed_up_list.filter(volunteershift__start_time__isnull=True, volunteershift__end_time__isnull=True)
 
     #order the list by date in ascending order
     shift_signed_up_list = shift_signed_up_list.order_by('date')

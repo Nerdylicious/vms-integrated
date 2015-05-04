@@ -24,7 +24,7 @@
                         <td>{{ shift.start_time }}</td>
                         <td>{{ shift.end_time }}</td>
                         <td>
-                            <a href="" class="btn btn-danger btn-sm">Cancel Shift Registration</a>
+                            <a href="{% url 'shift:cancel' shift.id volunteer_id %}" class="btn btn-danger btn-sm">Cancel Shift Registration</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -32,7 +32,7 @@
         </table>
     {% else %}
         <div class="alert alert-info">
-            This volunteer is not signed up for any shifts.
+            This volunteer does not have any upcoming shifts.
         </div>
     {% endif %}
 {% endblock %}

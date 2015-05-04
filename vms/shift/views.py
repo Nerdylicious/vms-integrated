@@ -34,19 +34,26 @@ def add_hours(request, shift_id, volunteer_id):
     else:
         raise Http404
 
+#throwing an error when not signed in as administrator (will fix as the next task)
 @login_required
 def cancel(request, shift_id, volunteer_id):
     if shift_id and volunteer_id:
         user = request.user
-        if int(user.volunteer.id) == int(volunteer_id):
+        #if the user is an admin or if the volunteer is canceling their own shift
+        if (user.administrator) or (int(user.volunteer.id) == int(volunteer_id)):
             if request.method == 'POST':
                 try:
                     cancel_shift_registration(volunteer_id, shift_id)
-                    return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                    if user.administrator:
+                        return HttpResponseRedirect(reverse('shift:manage_volunteer_shifts', args=(volunteer_id,)))
+                    elif user.volunteer:
+                        return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                    else:
+                        raise Http404
                 except:
                     raise Http404
             else:
-                return render(request, 'shift/cancel_shift.html')
+                return render(request, 'shift/cancel_shift.html', {'shift_id' : shift_id, 'volunteer_id' : volunteer_id})
         else:
             return HttpResponse(status=403)
     else:
@@ -187,7 +194,7 @@ def manage_volunteer_shifts(request, volunteer_id):
         if volunteer:
             #show only shifts that have no hours logged yet (since it doesn't make sense be able to cancel shifts that have already been logged)
             shift_list = get_unlogged_shifts_by_volunteer_id(volunteer_id)
-            return render(request, 'shift/manage_volunteer_shifts.html', {'shift_list' : shift_list})
+            return render(request, 'shift/manage_volunteer_shifts.html', {'shift_list' : shift_list, 'volunteer_id' : volunteer_id})
         else:
             raise Http404
     else:
