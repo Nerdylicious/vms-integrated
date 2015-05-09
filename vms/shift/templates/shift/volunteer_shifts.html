@@ -12,7 +12,7 @@
                     <th>Date</th>
                     <th>Scheduled Start Time</th>
                     <th>Scheduled End Time</th>
-                    <th>Add Hours</th>
+                    <th>Log Hours</th>
                     <th>Cancel Shift Registration</th>
                 </tr>
             </thead>
@@ -24,7 +24,7 @@
                         <td>{{ shift.start_time }}</td>
                         <td>{{ shift.end_time }}</td>
                         <td>
-                            <a href="{% url 'shift:add_hours' shift.id user.volunteer.id %}" class="btn btn-success btn-sm">Add Hours</a>
+                            <a href="{% url 'shift:add_hours' shift.id user.volunteer.id %}" class="btn btn-success btn-sm">Log Hours</a>
                         </td>
                         <td>
                             <a href="{% url 'shift:cancel' shift.id user.volunteer.id %}" class="btn btn-danger btn-sm">Cancel Shift Registration</a>
