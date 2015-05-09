@@ -104,8 +104,15 @@ def get_shifts_with_open_slots(j_id):
     shift_list = []
 
     for shift in shift_list_by_date:
-        if get_shift_slots_remaining(shift.id) > 0:
-            shift_list.append(shift)
+        slots_remaining = get_shift_slots_remaining(shift.id)
+        if slots_remaining > 0:
+            shift_map = {}
+            shift_map["id"] = shift.id
+            shift_map["date"] = shift.date
+            shift_map["start_time"] = shift.start_time
+            shift_map["end_time"] = shift.end_time
+            shift_map["slots_remaining"] = slots_remaining
+            shift_list.append(shift_map)
 
     return shift_list             
 

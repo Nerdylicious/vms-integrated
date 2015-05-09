@@ -15,7 +15,7 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Sign Up</th>
-                    <th>Slots</th>
+                    <th>Slots Remaining</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                         <td>
                             <a href="{% url 'shift:sign_up' shift.id %}" class="btn btn-success btn-sm">Sign Up</a>
                         </td>
-                        <td>{{ shift.max_volunteers }}</td>
+                        <td>{{ shift.slots_remaining }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
