@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -37,25 +38,44 @@ def add_hours(request, shift_id, volunteer_id):
 #throwing an error when not signed in as administrator (will fix as the next task)
 @login_required
 def cancel(request, shift_id, volunteer_id):
+
     if shift_id and volunteer_id:
+
         user = request.user
-        #if the user is an admin or if the volunteer is canceling their own shift
-        if (user.administrator) or (int(user.volunteer.id) == int(volunteer_id)):
-            if request.method == 'POST':
-                try:
-                    cancel_shift_registration(volunteer_id, shift_id)
-                    if user.administrator:
-                        return HttpResponseRedirect(reverse('shift:manage_volunteer_shifts', args=(volunteer_id,)))
-                    elif user.volunteer:
-                        return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
-                    else:
-                        raise Http404
-                except:
-                    raise Http404
-            else:
-                return render(request, 'shift/cancel_shift.html', {'shift_id' : shift_id, 'volunteer_id' : volunteer_id})
-        else:
+        admin = None
+        volunteer = None
+
+        try:
+            admin = user.administrator
+        except ObjectDoesNotExist:
+            pass
+        try:
+            volunteer = user.volunteer
+        except ObjectDoesNotExist:
+            pass
+
+        #check that either an admin or volunteer is logged in
+        if not admin and not volunteer:
             return HttpResponse(status=403)
+
+        #if a volunteer is logged in, verify that they are canceling their own shift
+        if volunteer:
+            if (int(volunteer.id) != int(volunteer_id)):
+                return HttpResponse(status=403)
+
+        if request.method == 'POST':
+            try:
+                cancel_shift_registration(volunteer_id, shift_id)
+                if admin:
+                    return HttpResponseRedirect(reverse('shift:manage_volunteer_shifts', args=(volunteer_id,)))
+                elif volunteer:
+                    return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                else:
+                    raise Http404
+            except:
+                raise Http404
+        else:
+            return render(request, 'shift/cancel_shift.html', {'shift_id' : shift_id, 'volunteer_id' : volunteer_id})
     else:
         raise Http404
 
