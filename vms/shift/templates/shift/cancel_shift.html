@@ -10,7 +10,11 @@
             </div>
             <div class="panel-body">
                 <br>
-                Are you sure you want to cancel this shift you are signed up for?
+                {% if user.administrator %}
+                    Are you sure you want to cancel this registered shift?
+                {% else %}
+                    Are you sure you want to cancel this shift you are signed up for?
+                {% endif %}
                 <br>
                 <br>
                 <button class="btn btn-danger" type="submit">Yes, Cancel this Shift</button>
