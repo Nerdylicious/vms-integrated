@@ -108,6 +108,10 @@ def profile(request, volunteer_id):
         raise Http404
 
 @login_required
+def report(request, volunteer_id):
+    return render(request, 'volunteer/report.html')
+
+@login_required
 def search(request):
     if request.method == 'POST':
         form = SearchVolunteerForm(request.POST)
