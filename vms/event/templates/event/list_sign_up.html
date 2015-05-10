@@ -2,6 +2,8 @@
 
 {% block content %}
     <div class="spacer"></div>
+    <a href="{% url 'shift:manage_volunteer_shifts' volunteer_id %}" class="btn btn-default">Return to Manage Shifts</a>
+    <div class="spacer"></div>
     {% if event_list %}
         <ul class="breadcrumb">
             <li class="active">Events</li>
