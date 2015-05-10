@@ -88,13 +88,13 @@ def list(request):
     return render(request, 'job/list.html', {'job_list' : job_list})
 
 @login_required
-def list_sign_up(request, event_id):
+def list_sign_up(request, event_id, volunteer_id):
 
     if event_id:
         event = get_event_by_id(event_id)
         if event:
             job_list = get_jobs_by_event_id(event_id);
-            return render(request, 'job/list_sign_up.html', {'event' : event, 'job_list' : job_list});
+            return render(request, 'job/list_sign_up.html', {'event' : event, 'job_list' : job_list, 'volunteer_id' : volunteer_id});
         else:
             raise Http404
     else:

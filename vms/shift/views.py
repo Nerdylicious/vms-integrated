@@ -196,12 +196,12 @@ def list_shifts(request, job_id):
         raise Http404
 
 @login_required
-def list_shifts_sign_up(request, job_id):
+def list_shifts_sign_up(request, job_id, volunteer_id):
     if job_id:
         job = get_job_by_id(job_id)
         if job:
             shift_list = get_shifts_with_open_slots(job_id)
-            return render(request, 'shift/list_shifts_sign_up.html', {'shift_list' : shift_list, 'job' : job})
+            return render(request, 'shift/list_shifts_sign_up.html', {'shift_list' : shift_list, 'job' : job, 'volunteer_id' : volunteer_id})
         else:
             raise Http404
     else:
@@ -221,7 +221,7 @@ def manage_volunteer_shifts(request, volunteer_id):
         raise Http404
 
 @login_required
-def sign_up(request, shift_id):
+def sign_up(request, shift_id, volunteer_id):
     if shift_id:
         shift = get_shift_by_id(shift_id)
         if shift:
@@ -242,7 +242,7 @@ def sign_up(request, shift_id):
                     #return an Http 403 Forbidden code
                     return HttpResponse(status=403)
             else:
-                return render(request, 'shift/sign_up.html', {'shift' : shift})
+                return render(request, 'shift/sign_up.html', {'shift' : shift, 'volunteer_id' : volunteer_id})
         else:
             raise Http404
     else:

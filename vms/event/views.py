@@ -54,6 +54,6 @@ def list(request):
     return render(request, 'event/list.html', {'event_list' : event_list})
 
 @login_required
-def list_sign_up(request):
+def list_sign_up(request, volunteer_id):
     event_list = get_events_ordered_by_name()
-    return render(request, 'event/list_sign_up.html', {'event_list' : event_list})
+    return render(request, 'event/list_sign_up.html', {'event_list' : event_list, 'volunteer_id' : volunteer_id})

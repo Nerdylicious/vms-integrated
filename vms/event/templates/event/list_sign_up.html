@@ -22,7 +22,7 @@
                         <td>{{ event.start_date }}</td>
                         <td>{{ event.end_date }}</td>
                         <td>
-                            <a href="{% url 'job:list_sign_up' event.id %}" class="btn btn-success btn-sm">View Jobs</a>
+                            <a href="{% url 'job:list_sign_up' event.id volunteer_id %}" class="btn btn-success btn-sm">View Jobs</a>
                         </td>
                     </tr>
                 {% endfor %}

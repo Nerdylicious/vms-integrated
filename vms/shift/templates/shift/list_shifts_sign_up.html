@@ -3,8 +3,8 @@
 {% block content %}
     <div class="spacer"></div>
     <ul class="breadcrumb">
-        <li><a href="{% url 'event:list_sign_up' %}">Events</a></li>
-        <li><a href="{% url 'job:list_sign_up' job.event.id %}">{{ job.event.name }} Jobs</a></li>
+        <li><a href="{% url 'event:list_sign_up' volunteer_id %}">Events</a></li>
+        <li><a href="{% url 'job:list_sign_up' job.event.id volunteer_id %}">{{ job.event.name }} Jobs</a></li>
         <li class="active">{{ job.name }} Shifts</li>
     </ul>
     {% if shift_list %}
@@ -25,7 +25,7 @@
                         <td>{{ shift.start_time }}</td>
                         <td>{{ shift.end_time }}</td>
                         <td>
-                            <a href="{% url 'shift:sign_up' shift.id %}" class="btn btn-success btn-sm">Sign Up</a>
+                            <a href="{% url 'shift:sign_up' shift.id volunteer_id %}" class="btn btn-success btn-sm">Sign Up</a>
                         </td>
                         <td>{{ shift.slots_remaining }}</td>
                     </tr>
