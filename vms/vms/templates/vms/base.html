@@ -37,6 +37,7 @@
                         {% endif %}
                         {% if user.administrator %}
                             <li><a href="{% url 'administrator:settings' %}">Settings</a></li>
+                            <li><a href="{% url 'registration:signup_administrator' %}">Create Admin Account</a></li>
                         {% endif %}
                         {% if user.volunteer %} 
                             <li><a href="{% url 'volunteer:profile' user.volunteer.id %}">Profile</a></li>
