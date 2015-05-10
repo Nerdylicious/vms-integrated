@@ -6,9 +6,17 @@
         <h4>Error</h4>
         <br>
         {% if error_code == "ERROR_CODE_ALREADY_SIGNED_UP" %}
-            You have already signed up for this shift. Please sign up for a different shift.
+            {% if user.administrator %}
+                This user is already signed up for this shift. Please assign a different shift.
+            {% else %}
+                You have already signed up for this shift. Please sign up for a different shift.
+            {% endif %}
         {% elif error_code == "ERROR_CODE_NO_SLOTS_REMAINING" %}
-            There are not slots remaining for this shift. Please sign up for a different shift.
+            {% if user.administrator %}
+                There are no slots remaining for this shift. Please assign a different shift.
+            {% else %}
+                There are no slots remaining for this shift. Please sign up for a different shift.
+            {% endif %}
         {% else %}
         {% endif %}
         <br>

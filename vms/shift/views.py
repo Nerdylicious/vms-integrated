@@ -225,22 +225,39 @@ def sign_up(request, shift_id, volunteer_id):
     if shift_id:
         shift = get_shift_by_id(shift_id)
         if shift:
-            if request.method == 'POST':
-                #retrieve the logged in user.id and from this retrieve the corresponding volunteer.id
-                user = request.user
-                if user.is_authenticated():
-                    volunteer_id = user.volunteer.id
-                    try:
-                        result = register(volunteer_id, shift_id)            
-                        if result == "IS_VALID":
-                            return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
-                        else:
-                            return render(request, 'shift/sign_up_error.html', {'error_code' : result})
-                    except ObjectDoesNotExist:
-                        raise Http404
-                else:
-                    #return an Http 403 Forbidden code
+
+            user = request.user
+            admin = None
+            volunteer = None
+
+            try:
+                admin = user.administrator
+            except ObjectDoesNotExist:
+                pass
+            try:
+                volunteer = user.volunteer
+            except ObjectDoesNotExist:
+                pass
+
+            if not admin and not volunteer:
+                return HttpResponse(status=403)
+
+            if volunteer:
+                if (int(volunteer.id) != int(volunteer_id)):
                     return HttpResponse(status=403)
+
+            if request.method == 'POST':
+                try:
+                    result = register(volunteer_id, shift_id)            
+                    if result == "IS_VALID":
+                        if admin:
+                            return HttpResponseRedirect(reverse('shift:manage_volunteer_shifts', args=(volunteer_id,)))
+                        if volunteer:
+                            return HttpResponseRedirect(reverse('shift:view_volunteer_shifts', args=(volunteer_id,)))
+                    else:
+                        return render(request, 'shift/sign_up_error.html', {'error_code' : result})
+                except ObjectDoesNotExist:
+                    raise Http404
             else:
                 return render(request, 'shift/sign_up.html', {'shift' : shift, 'volunteer_id' : volunteer_id})
         else:

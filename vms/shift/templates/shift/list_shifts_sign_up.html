@@ -14,7 +14,11 @@
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
-                    <th>Sign Up</th>
+                    {% if user.administrator %}
+                        <th>Assign Shift</th>
+                    {% else %}
+                        <th>Sign Up</th>
+                    {% endif %}
                     <th>Slots Remaining</th>
                 </tr>
             </thead>
@@ -24,9 +28,15 @@
                         <td>{{ shift.date }}</td>
                         <td>{{ shift.start_time }}</td>
                         <td>{{ shift.end_time }}</td>
-                        <td>
-                            <a href="{% url 'shift:sign_up' shift.id volunteer_id %}" class="btn btn-success btn-sm">Sign Up</a>
-                        </td>
+                        {% if user.administrator %}
+                            <td>
+                                <a href="{% url 'shift:sign_up' shift.id volunteer_id %}" class="btn btn-success btn-sm">Assign Shift</a>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="{% url 'shift:sign_up' shift.id volunteer_id %}" class="btn btn-success btn-sm">Sign Up</a>
+                            </td>
+                        {% endif %}
                         <td>{{ shift.slots_remaining }}</td>
                     </tr>
                 {% endfor %}
