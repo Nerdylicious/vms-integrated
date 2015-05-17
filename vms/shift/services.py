@@ -2,7 +2,7 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from job.models import Job
 from shift.models import Shift, VolunteerShift
-from volunteer.services import *
+from volunteer.services import get_volunteer_by_id
 
 def add_shift_hours(v_id, s_id, start_time, end_time):
 
@@ -65,6 +65,45 @@ def edit_shift_hours(v_id, s_id, start_time, end_time):
         volunteer_shift.save()
     else:
         raise ObjectDoesNotExist
+        
+def generate_report(volunteer_shift_list):
+
+    report_list = []
+
+    for volunteer_shift in volunteer_shift_list:
+
+        volunteer = volunteer_shift.volunteer
+        shift = volunteer_shift.shift
+        job = shift.job
+
+        report = {}
+        report["first_name"] = volunteer.first_name
+        report["last_name"] = volunteer.last_name
+        if volunteer.organization:
+            report["organization"] = volunteer.organization.organization_name
+        elif volunteer.unlisted_organization:
+            report["organization"] = volunteer.unlisted_organization
+        else:
+            report["organization"] = None
+        report["job_name"] = job.name
+        report["date"] = shift.date
+        report["start_time"] = volunteer_shift.start_time
+        report["end_time"] = volunteer_shift.end_time
+
+        report_list.append(report)
+
+    return report_list    
+
+def get_report(v_d, event_name, job_name):
+    
+    volunteer_shift_list = get_volunteer_shifts_with_hours(v_id)
+
+    #filter based on criteria provided
+    if job_title:
+        volunteer_shift_list = volunteer_shift_list.filter(shift__job__name__icontains=job_name)
+
+    report_list = generate_report(volunteer_shift_list)
+    return report_list
 
 def get_shift_by_id(shift_id):
 

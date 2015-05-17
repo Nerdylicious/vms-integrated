@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from organization.services import *
+from shift.services import *
 from volunteer.forms import ReportForm, SearchVolunteerForm, VolunteerForm
 from volunteer.models import Volunteer
 from volunteer.services import * 
@@ -116,7 +117,12 @@ def report(request, volunteer_id):
             if request.method == 'POST':
                 form = ReportForm(request.POST)
                 if form.is_valid():
-                    return render(request, 'volunteer/report.html', {'form' : form})
+                    event_name = form.cleaned_data['event_name']
+                    job_name = form.cleaned_data['job_name']
+                    report_list = None
+                    if event_name or job_name:
+                        report_list = get_report(event_name, job_name)
+                    return render(request, 'volunteer/report.html', {'form' : form, 'report_list' : report_list})
                 else:
                     return render(request, 'volunteer/report.html', {'form' : form})
             else:
