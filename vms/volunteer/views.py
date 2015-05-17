@@ -7,10 +7,10 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from organization.services import *
-from volunteer.forms import * 
+from volunteer.forms import ReportForm, SearchVolunteerForm, VolunteerForm
 from volunteer.models import Volunteer
 from volunteer.services import * 
-from volunteer.validation import *
+from volunteer.validation import validate_file
 
 @login_required
 def download_resume(request, volunteer_id):
@@ -109,7 +109,15 @@ def profile(request, volunteer_id):
 
 @login_required
 def report(request, volunteer_id):
-    return render(request, 'volunteer/report.html')
+    volunteer = get_volunteer_by_id(volunteer_id)
+    if volunteer:
+        if request.method == 'POST':
+            pass
+        else:
+            form = ReportForm()
+            return render(request, 'volunteer/report.html', {'form' : form})
+    else:
+        raise Http404
 
 @login_required
 def search(request):
