@@ -7,7 +7,56 @@
             {% csrf_token %}
             <fieldset>
                 <legend>Report</legend>
+                {% if form.event_name.errors %}
+                    <div class="form-group has-error">
+                        <label class="col-md-2 control-label">Event Name</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" name="event_name" value="{% if form.event_name.value %}{{ form.event_name.value}}{% endif %}">
+                            <p class="help-block">
+                                <strong>
+                                    {% for error in form.event_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Event Name</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" name="event_name" value="{% if form.event_name.value %}{{ form.event_name.value}}{% endif %}">
+                        </div>
+                    </div>
+                {% endif %}
+                {% if form.job_name.errors %}
+                    <div class="form-group has-error">
+                        <label class="col-md-2 control-label">Job Name</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" name="job_name" value="{% if form.job_name.value %}{{ form.job_name.value}}{% endif %}">
+                            <p class="help-block">
+                                <strong>
+                                    {% for error in form.job_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </strong>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Job Name</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" name="job_name" value="{% if form.job_name.value %}{{ form.job_name.value}}{% endif %}">
+                        </div>
+                    </div>
+                {% endif %}
             </fieldset>
+            <div class="form-group">
+                <div class="col-md-12 col-md-offset-2">
+                    <button class="btn btn-success" type="submit">Generate Report</button>
+                </div>
+            </div>
         </form>
     </div>
 {% endblock %}
