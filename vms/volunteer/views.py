@@ -111,11 +111,19 @@ def profile(request, volunteer_id):
 def report(request, volunteer_id):
     volunteer = get_volunteer_by_id(volunteer_id)
     if volunteer:
-        if request.method == 'POST':
-            pass
+        user = request.user
+        if int(user.volunteer.id) == int(volunteer_id):
+            if request.method == 'POST':
+                form = ReportForm(request.POST)
+                if form.is_valid():
+                    return render(request, 'volunteer/report.html', {'form' : form})
+                else:
+                    return render(request, 'volunteer/report.html', {'form' : form})
+            else:
+                form = ReportForm()
+                return render(request, 'volunteer/report.html', {'form' : form})
         else:
-            form = ReportForm()
-            return render(request, 'volunteer/report.html', {'form' : form})
+            return HttpResponse(status=403)
     else:
         raise Http404
 

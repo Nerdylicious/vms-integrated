@@ -3,50 +3,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from organization.services import *
 from volunteer.models import Volunteer
 
-def get_all_volunteers():
-    
-    volunteer_list = Volunteer.objects.all()
-    return volunteer_list
-
-def get_volunteer_by_id(volunteer_id):
-
-    is_valid = True
-    result = None
-
-    try:
-        volunteer = Volunteer.objects.get(pk=volunteer_id)
-    except ObjectDoesNotExist:  
-        is_valid = False
-        
-    if is_valid:
-        result = volunteer
-
-    return result  
-
-def has_resume_file(volunteer_id):
-    
-    result = False 
-    volunteer = get_volunteer_by_id(volunteer_id)
-
-    if volunteer and volunteer.resume_file:
-        result = True 
-
-    return result
-    
-def get_volunteer_resume_file_url(volunteer_id):
-
-    result = None
-    volunteer = get_volunteer_by_id(volunteer_id)
-
-    if volunteer and volunteer.resume_file:
-        result = volunteer.resume_file.url
-
-    return result 
-
-def get_volunteers_ordered_by_first_name():
-    volunteer_list = Volunteer.objects.all().order_by('first_name')
-    return volunteer_list
-
 def delete_volunteer(volunteer_id):
 
     volunteer = get_volunteer_by_id(volunteer_id)
@@ -73,6 +29,50 @@ def delete_volunteer_resume(volunteer_id):
         volunteer.resume_file.delete()
     else:
         return ObjectDoesNotExist
+
+def get_all_volunteers():
+    
+    volunteer_list = Volunteer.objects.all()
+    return volunteer_list
+
+def get_volunteer_by_id(volunteer_id):
+
+    is_valid = True
+    result = None
+
+    try:
+        volunteer = Volunteer.objects.get(pk=volunteer_id)
+    except ObjectDoesNotExist:  
+        is_valid = False
+        
+    if is_valid:
+        result = volunteer
+
+    return result  
+
+def get_volunteer_resume_file_url(volunteer_id):
+
+    result = None
+    volunteer = get_volunteer_by_id(volunteer_id)
+
+    if volunteer and volunteer.resume_file:
+        result = volunteer.resume_file.url
+
+    return result 
+
+def get_volunteers_ordered_by_first_name():
+    volunteer_list = Volunteer.objects.all().order_by('first_name')
+    return volunteer_list
+
+def has_resume_file(volunteer_id):
+    
+    result = False 
+    volunteer = get_volunteer_by_id(volunteer_id)
+
+    if volunteer and volunteer.resume_file:
+        result = True 
+
+    return result
 
 def search_volunteers(first_name, last_name, city, state, country, organization):
     
