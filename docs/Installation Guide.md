@@ -4,17 +4,18 @@
 This tutorial assumes that the user is installing and running the project under the Ubuntu Virtual Machine that is provided by Systers.
 
 ## Table of Contents
-1. [Install git](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#install-git)
-2. [Clone Project](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#clone-project)
-3. [Install Django and PostgreSQL](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#install-django-and-postgresql)
-4. [Install VirtualBox and Vagrant](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#install-virtualbox-and-vagrant)
-5. [Download Systers Ubuntu Virtual Machine](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#download-systers-ubuntu-virual-machine)
-6. [Install python-psycopg2 module](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#install-python-psycopg2-module)
-7. [Setup PostgreSQL](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#setup-postgresql)
-8. [Generate Database Tables Corresponding to Django Models](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#generate-database-tables-corresponding-to-django-models)
-9. [Change Directory Permissions](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#change-directory-permissions)
-10. [Run Development Server](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#run-development-server)
-11. [Run Unit Tests](https://github.com/Nerdylicious/vms-pre-integration/wiki/VMS-Installation-Instructions#run-unit-tests)
+1. [Install git](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#install-git)
+2. [Clone Project](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#clone-project)
+3. [Install Django and PostgreSQL](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#install-django-and-postgresql)
+4. [Install VirtualBox and Vagrant](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#install-virtualbox-and-vagrant)
+5. [Download Systers Ubuntu Virtual Machine](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#download-systers-ubuntu-virtual-machine)
+6. [Using Vagrant] (https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#using-vagrant)
+7. [Install python-psycopg2 module](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#install-python-psycopg2-module)
+8. [Setup PostgreSQL](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#setup-postgresql)
+9. [Generate Database Tables Corresponding to Django Models](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#generate-database-tables-corresponding-to-django-models)
+10. [Change Directory Permissions](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#change-directory-permissions)
+11. [Run Development Server](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#run-development-server)
+12. [Run Unit Tests](https://github.com/Nerdylicious/vms-integrated/blob/master/docs/Installation%20Guide.md#run-unit-tests)
 
 ## Install git
 
@@ -75,7 +76,7 @@ config.vm.network "public_network"
 
 end
 ```
-Save this file as 'Vagrantfile' (if you don't already have this file) in the top level directory for the project.
+Save this file as **Vagrantfile** (if you don't already have this file) in the top level directory for the project.
 
 To download the VM, run the following command:
 
@@ -141,7 +142,7 @@ Next, exit the postgres client by running the command:
 
     \q
 
-We will need to change the pg_hba.conf file to indicate that users will authenticate by md5 as opposed to peer authentication. To do this, first open the pg_hba.conf file by running the command:
+We will need to change the **pg_hba.conf** file to indicate that users will authenticate by md5 as opposed to peer authentication. To do this, first open the **pg_hba.conf** file by running the command:
 ```
 sudo nano /etc/postgresql/x.x/main/pg_hba.conf
 ```
@@ -189,7 +190,7 @@ Make sure to exit the postgres client before proceeding to the next steps:
 
 ## Generate Database Tables Corresponding to Django Models
 
-Change directory to where you can find the manage.py file (this is located in the top level directory for the project). If you are installing the project on the VM, the project will be located within the /vagrant/vms directory.
+Change directory to where you can find the **manage.py** file (this is located in the top level directory for the project). If you are installing the project on the VM, the project will be located within the **/vagrant/vms** directory.
 
 To view the sql commands that will be generated from syncdb, run the command:
 
@@ -221,13 +222,13 @@ Make sure to exit the postgres client before proceeding to the next steps:
 
 ## Change Directory Permissions
 
-You will have to change the permissions on the /srv directory to read, write and execute (/srv is the directory where Volunteer resumes are uploaded and stored). To do this, run the following command:
+You will have to change the permissions on the **/srv** directory to read, write and execute (**/srv** is the directory where Volunteer resumes are uploaded and stored). To do this, run the following command:
 
     sudo chmod 777 /srv
 
 ## Run Development Server
 
-Change directory to where you can find the manage.py file (this is located in the top level directory for the project).
+Change directory to where you can find the **manage.py** file (this is located in the top level directory for the project).
 
 Start the development server by running the command (this runs the development server on the VM):
 
