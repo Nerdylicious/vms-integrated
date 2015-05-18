@@ -106,8 +106,8 @@ def generate_report(volunteer_shift_list):
         report["event_name"] = event.name
         report["job_name"] = job.name
         report["date"] = shift.date
-        report["start_time"] = volunteer_shift.start_time
-        report["end_time"] = volunteer_shift.end_time
+        report["logged_start_time"] = volunteer_shift.start_time
+        report["logged_end_time"] = volunteer_shift.end_time
         report["duration"] = calculate_duration(volunteer_shift.start_time, volunteer_shift.end_time)
 
         report_list.append(report)
@@ -119,6 +119,8 @@ def get_report(v_id, event_name, job_name):
     volunteer_shift_list = get_volunteer_shifts_with_hours(v_id)
 
     #filter based on criteria provided
+    if event_name:
+        volunteer_shift_list = volunteer_shift_list.filter(shift__job__event__name__icontains=event_name)
     if job_name:
         volunteer_shift_list = volunteer_shift_list.filter(shift__job__name__icontains=job_name)
 
