@@ -298,6 +298,68 @@ class ShiftMethodTests(TestCase):
         cancel_shift_registration(v2.id, s2.id)
         cancel_shift_registration(v2.id, s3.id)
 
+    def test_calculate_duration(self):
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=2, minute=0) 
+        delta_time_hours = 1
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=45) 
+        end_time = datetime.time(hour=2, minute=0) 
+        delta_time_hours = 0.25
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=2, minute=30) 
+        delta_time_hours = 1.5
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=1, minute=45) 
+        delta_time_hours = 0.75
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=13, minute=0) 
+        delta_time_hours = 12
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=5, minute=45) 
+        delta_time_hours = 4.75 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=1, minute=0) 
+        delta_time_hours = 0 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=1, minute=0) 
+        end_time = datetime.time(hour=23, minute=0) 
+        delta_time_hours = 22 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=22, minute=0) 
+        end_time = datetime.time(hour=1, minute=0) 
+        delta_time_hours = 3 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=13, minute=0) 
+        end_time = datetime.time(hour=1, minute=0) 
+        delta_time_hours = 12 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=0, minute=0) 
+        end_time = datetime.time(hour=23, minute=0) 
+        delta_time_hours = 23 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
+        start_time = datetime.time(hour=23, minute=0) 
+        end_time = datetime.time(hour=0, minute=0) 
+        delta_time_hours = 1 
+        self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
+
     def test_edit_shift_hours(self):
 
         u1 = User.objects.create_user('Yoshi')     
