@@ -103,6 +103,92 @@ class ShiftMethodTests(TestCase):
         self.assertEqual(volunteer_shift.start_time, start_time)
         self.assertEqual(volunteer_shift.end_time, end_time)
 
+    def test_calculate_total_report_hours(self):
+
+        duration_list = [1, 1, 1, 1]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
+        duration_list = [1.5, 1.34, 2.3, 9, 4.7]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
+        duration_list = [0.03, 0.023, 0.53, 0.863, 0.23, 0.57]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
+        duration_list = [12, 24, 23.5, 15.67, 22.453, 3.42]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
+        duration_list = [5]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
+        duration_list = [0, 0, 0, 0]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
+        duration_list = [0]
+        report_list = []
+        total_hours = 0
+
+        for duration in duration_list:
+            total_hours += duration
+            report = {}
+            report["duration"] = duration
+            report_list.append(report)
+
+        self.assertEqual(calculate_total_report_hours(report_list), total_hours)
+
     def test_cancel_shift_registration(self):
 
         u1 = User.objects.create_user('Yoshi')     
