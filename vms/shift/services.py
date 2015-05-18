@@ -15,6 +15,13 @@ def add_shift_hours(v_id, s_id, start_time, end_time):
     else:
         raise ObjectDoesNotExist
 
+def calculate_duration(start_time, end_time):
+
+    start_delta = datetime.timedelta(hours=start_time.hour, minutes=start_time.minute)
+    end_delta = datetime.timedelta(hours=end_time.hour, minutes=end_time.minute)
+    working_hours = (float((end_delta - start_delta).seconds) / 60) / 60
+    return working_hours
+
 def cancel_shift_registration(v_id, s_id):
 
     if s_id and v_id:
@@ -80,7 +87,7 @@ def generate_report(volunteer_shift_list):
         report["first_name"] = volunteer.first_name
         report["last_name"] = volunteer.last_name
         if volunteer.organization:
-            report["organization"] = volunteer.organization.organization_name
+            report["organization"] = volunteer.organization.name
         elif volunteer.unlisted_organization:
             report["organization"] = volunteer.unlisted_organization
         else:
@@ -89,17 +96,18 @@ def generate_report(volunteer_shift_list):
         report["date"] = shift.date
         report["start_time"] = volunteer_shift.start_time
         report["end_time"] = volunteer_shift.end_time
+        report["duration"] = calculate_duration(volunteer_shift.start_time, volunteer_shift.end_time)
 
         report_list.append(report)
 
     return report_list    
 
-def get_report(v_d, event_name, job_name):
+def get_report(v_id, event_name, job_name):
     
     volunteer_shift_list = get_volunteer_shifts_with_hours(v_id)
 
     #filter based on criteria provided
-    if job_title:
+    if job_name:
         volunteer_shift_list = volunteer_shift_list.filter(shift__job__name__icontains=job_name)
 
     report_list = generate_report(volunteer_shift_list)

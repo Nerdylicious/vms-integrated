@@ -121,7 +121,7 @@ def report(request, volunteer_id):
                     job_name = form.cleaned_data['job_name']
                     report_list = None
                     if event_name or job_name:
-                        report_list = get_report(event_name, job_name)
+                        report_list = get_report(volunteer_id, event_name, job_name)
                     return render(request, 'volunteer/report.html', {'form' : form, 'report_list' : report_list})
                 else:
                     return render(request, 'volunteer/report.html', {'form' : form})
