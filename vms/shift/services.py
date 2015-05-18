@@ -81,6 +81,7 @@ def generate_report(volunteer_shift_list):
 
         volunteer = volunteer_shift.volunteer
         shift = volunteer_shift.shift
+        event = shift.job.event
         job = shift.job
 
         report = {}
@@ -92,6 +93,7 @@ def generate_report(volunteer_shift_list):
             report["organization"] = volunteer.unlisted_organization
         else:
             report["organization"] = None
+        report["event_name"] = event.name
         report["job_name"] = job.name
         report["date"] = shift.date
         report["start_time"] = volunteer_shift.start_time
