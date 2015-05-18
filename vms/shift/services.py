@@ -22,6 +22,16 @@ def calculate_duration(start_time, end_time):
     working_hours = (float((end_delta - start_delta).seconds) / 60) / 60
     return working_hours
 
+
+def calculate_total_report_hours(report_list):
+
+    total_hours = 0
+
+    for report in report_list:
+        total_hours += report["duration"]
+
+    return total_hours
+
 def cancel_shift_registration(v_id, s_id):
 
     if s_id and v_id:

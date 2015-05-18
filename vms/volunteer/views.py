@@ -120,14 +120,16 @@ def report(request, volunteer_id):
                     event_name = form.cleaned_data['event_name']
                     job_name = form.cleaned_data['job_name']
                     report_list = get_report(volunteer_id, event_name, job_name)
-                    return render(request, 'volunteer/report.html', {'form' : form, 'report_list' : report_list})
+                    total_hours = calculate_total_report_hours(report_list)
+                    return render(request, 'volunteer/report.html', {'form' : form, 'report_list' : report_list, 'total_hours' : total_hours})
                 else:
                     return render(request, 'volunteer/report.html', {'form' : form})
             else:
                 form = ReportForm()
                 #by default, get all hours for this volunteer and display that as the report
                 report_list = get_report(volunteer_id, None, None)
-                return render(request, 'volunteer/report.html', {'form' : form, 'report_list' : report_list})
+                total_hours = calculate_total_report_hours(report_list)
+                return render(request, 'volunteer/report.html', {'form' : form, 'report_list' : report_list, 'total_hours' : total_hours})
         else:
             return HttpResponse(status=403)
     else:
