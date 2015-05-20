@@ -360,6 +360,101 @@ class ShiftMethodTests(TestCase):
         delta_time_hours = 1 
         self.assertEqual(calculate_duration(start_time, end_time), delta_time_hours)
 
+    def test_clear_shift_hours(self):
+
+        u1 = User.objects.create_user('Yoshi')     
+
+        v1 = Volunteer(first_name = "Yoshi",
+                    last_name = "Turtle",
+                    address = "Mario Land",
+                    city = "Nintendo Land",
+                    state = "Nintendo State",
+                    country = "Nintendo Nation",
+                    phone_number = "2374983247",
+                    email = "yoshi@nintendo.com",
+                    user = u1)
+
+        v1.save()
+
+        e1 = Event(name = "Open Source Event",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23")
+
+        e1.save()
+
+        j1 = Job(name = "Software Developer",
+                start_date = "2012-10-22",
+                end_date = "2012-10-23",
+                description = "A software job",
+                event = e1)
+
+        j2 = Job(name = "Systems Administrator",
+                start_date = "2012-9-1",
+                end_date = "2012-10-26",
+                description = "A systems administrator job",
+                event = e1)
+
+        j1.save()
+        j2.save()
+
+        s1 = Shift(date = "2012-10-23",
+                start_time = "9:00",
+                end_time = "3:00",
+                max_volunteers = 1,
+                job = j1)
+
+        s2 = Shift(date = "2012-10-23",
+                start_time = "10:00",
+                end_time = "4:00",
+                max_volunteers = 2,
+                job = j1)
+
+        s3 = Shift(date = "2012-10-23",
+                start_time = "12:00",
+                end_time = "6:00",
+                max_volunteers = 4,
+                job = j2)
+
+        s1.save()
+        s2.save()
+        s3.save()
+
+        register(v1.id, s1.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id))
+
+        register(v1.id, s2.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s2.id))
+
+        register(v1.id, s3.id)
+        self.assertIsNotNone(VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s3.id))
+
+        start_time = datetime.time(hour=9, minute=0)
+        end_time = datetime.time(hour=10, minute=0)
+        add_shift_hours(v1.id, s1.id, start_time, end_time)
+
+        start_time = datetime.time(hour=10, minute=0)
+        end_time = datetime.time(hour=12, minute=0)
+        add_shift_hours(v1.id, s2.id, start_time, end_time)
+
+        start_time = datetime.time(hour=5, minute=0)
+        end_time = datetime.time(hour=6, minute=0)
+        add_shift_hours(v1.id, s3.id, start_time, end_time)
+
+        clear_shift_hours(v1.id, s1.id)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s1.id)
+        self.assertIsNone(volunteer_shift.start_time)
+        self.assertIsNone(volunteer_shift.end_time)
+
+        clear_shift_hours(v1.id, s2.id)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s2.id)
+        self.assertIsNone(volunteer_shift.start_time)
+        self.assertIsNone(volunteer_shift.end_time)
+
+        clear_shift_hours(v1.id, s3.id)
+        volunteer_shift = VolunteerShift.objects.get(volunteer_id=v1.id, shift_id=s3.id)
+        self.assertIsNone(volunteer_shift.start_time)
+        self.assertIsNone(volunteer_shift.end_time)
+
     def test_edit_shift_hours(self):
 
         u1 = User.objects.create_user('Yoshi')     
