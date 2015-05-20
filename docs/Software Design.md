@@ -1,6 +1,6 @@
-# Design
+# Software Design
 
-The volunteer functionality of the project consists of the following Django apps:
+## Django Apps
 
 **administrator** - Contains functionality associated with administrators (such as functionality to view settings and generate reports).
 
@@ -21,6 +21,8 @@ The volunteer functionality of the project consists of the following Django apps
 **vms** - Contains a base template and project settings. **base.html** contains template elements that are present across all templates. **settings.py** specifies project wide settings.
 
 **volunteer** - Contains functionality associated with volunteers (such as functionality to edit and view volunteer profiles).
+
+## Application Architecture
 
 Each app contains a template layer, a view layer (sometimes called a "controller" in other frameworks) and an additional services layer for business logic.
 
